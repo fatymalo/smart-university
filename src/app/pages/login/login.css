@@ -1,0 +1,232 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Poppins,sans-serif;
+}
+
+.login-page{
+
+    height:100vh;
+
+    background:linear-gradient(135deg,#2563EB,#4338CA);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.overlay{
+
+    position:absolute;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,.15);
+
+}
+
+.login-card{
+
+    width:1000px;
+
+    max-width:95%;
+
+    min-height:550px;
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+
+    z-index:10;
+
+}
+
+.left-panel{
+
+    width:45%;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+.logo-circle{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:#2563EB;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:60px;
+
+    margin-bottom:30px;
+
+}
+
+.left-panel h1{
+
+    font-size:36px;
+
+    font-weight:bold;
+
+}
+
+.left-panel p{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    font-size:18px;
+
+}
+
+.right-panel{
+
+    width:55%;
+
+    background:white;
+
+    padding:70px;
+
+}
+
+.right-panel h2{
+
+    color:#2563EB;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    color:#777;
+
+    margin-bottom:40px;
+
+}
+
+.input-group-text{
+    background:#2563EB;
+    color:white;
+    border:none;
+    width:50px;
+    justify-content:center;
+}
+
+.form-control{
+
+    height:50px;
+
+}
+
+.login-btn{
+
+    height:50px;
+
+    border-radius:10px;
+
+    background:#2563EB;
+
+    color:white;
+
+    font-size:18px;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-3px);
+
+}
+
+@media(max-width:900px){
+
+    .login-card{
+        flex-direction:column;
+        animation:showCard .8s ease;
+    }
+
+    .left-panel{
+        width:100%;
+        padding:50px;
+    }
+
+    .right-panel{
+        width:100%;
+        padding:40px;
+    }
+
+}
+
+.university-tag{
+    margin-top:15px;
+    font-size:14px;
+    opacity:.9;
+    letter-spacing:1px;
+}
+
+@keyframes showCard{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+

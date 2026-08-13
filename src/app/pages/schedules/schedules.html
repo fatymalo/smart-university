@@ -1,0 +1,1011 @@
+<div class="schedules-page">
+
+  <!-- HEADER -->
+  <section class="page-header">
+
+    <div class="header-content">
+
+      <div class="breadcrumb">
+        <span>Administration</span>
+        <i class="bi bi-chevron-right"></i>
+        <span>Emplois du temps</span>
+      </div>
+
+      <h1>
+        Emplois du temps
+      </h1>
+
+      <p>
+        Planifiez, consultez et gérez les cours de l'université.
+      </p>
+
+    </div>
+
+    <button
+      class="btn-primary"
+      (click)="ouvrirModal()">
+
+      <i class="bi bi-calendar-plus"></i>
+
+      <span>Nouvel emploi</span>
+
+    </button>
+
+  </section>
+
+
+  <!-- STATISTIQUES -->
+  <section class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+        <i class="bi bi-calendar3"></i>
+      </div>
+
+      <div class="stat-info">
+        <span>Total des cours</span>
+        <strong>{{ totalSchedules }}</strong>
+        <small>Emplois programmés</small>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon purple">
+        <i class="bi bi-person-video3"></i>
+      </div>
+
+      <div class="stat-info">
+        <span>Enseignants</span>
+        <strong>{{ totalTeachers }}</strong>
+        <small>Enseignants affectés</small>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon green">
+        <i class="bi bi-building"></i>
+      </div>
+
+      <div class="stat-info">
+        <span>Salles utilisées</span>
+        <strong>{{ totalRooms }}</strong>
+        <small>Salles disponibles</small>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+        <i class="bi bi-mortarboard-fill"></i>
+      </div>
+
+      <div class="stat-info">
+        <span>Filières</span>
+        <strong>{{ totalFiliere }}</strong>
+        <small>Filières concernées</small>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FILTRES -->
+  <section class="filter-card">
+
+    <div class="filter-title">
+
+      <div class="filter-title-icon">
+        <i class="bi bi-funnel-fill"></i>
+      </div>
+
+      <div>
+        <strong>Rechercher et filtrer</strong>
+        <span>Trouvez rapidement un cours</span>
+      </div>
+
+    </div>
+
+
+    <div class="search-box">
+
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Rechercher par cours, enseignant, salle ou ID...">
+
+    </div>
+
+
+    <select [(ngModel)]="selectedFiliere">
+
+      <option value="">
+        Toutes les filières
+      </option>
+
+      <option value="Informatique">
+        Informatique
+      </option>
+
+      <option value="Gestion">
+        Gestion
+      </option>
+
+      <option value="Droit">
+        Droit
+      </option>
+
+      <option value="Médecine">
+        Médecine
+      </option>
+
+    </select>
+
+
+    <select [(ngModel)]="selectedNiveau">
+
+      <option value="">
+        Tous les niveaux
+      </option>
+
+      <option value="Licence 1">
+        Licence 1
+      </option>
+
+      <option value="Licence 2">
+        Licence 2
+      </option>
+
+      <option value="Licence 3">
+        Licence 3
+      </option>
+
+      <option value="Master 1">
+        Master 1
+      </option>
+
+      <option value="Master 2">
+        Master 2
+      </option>
+
+    </select>
+
+
+    <select [(ngModel)]="selectedJour">
+
+      <option value="">
+        Tous les jours
+      </option>
+
+      <option value="Lundi">
+        Lundi
+      </option>
+
+      <option value="Mardi">
+        Mardi
+      </option>
+
+      <option value="Mercredi">
+        Mercredi
+      </option>
+
+      <option value="Jeudi">
+        Jeudi
+      </option>
+
+      <option value="Vendredi">
+        Vendredi
+      </option>
+
+    </select>
+
+
+    <button
+      class="reset-btn"
+      (click)="resetFilters()">
+
+      <i class="bi bi-arrow-counterclockwise"></i>
+
+      Réinitialiser
+
+    </button>
+
+  </section>
+
+
+  <!-- TABLEAU -->
+  <section class="table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Planning des cours
+        </h2>
+
+        <p>
+          {{ filteredSchedules.length }}
+          emploi(s) trouvé(s)
+        </p>
+
+      </div>
+
+      <div class="academic-year">
+
+        <i class="bi bi-calendar-event"></i>
+
+        Année universitaire 2025-2026
+
+      </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Référence</th>
+
+            <th>Cours</th>
+
+            <th>Enseignant</th>
+
+            <th>Filière</th>
+
+            <th>Niveau</th>
+
+            <th>Salle</th>
+
+            <th>Jour</th>
+
+            <th>Horaire</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let emploi of filteredSchedules">
+
+            <!-- ID -->
+            <td>
+
+              <span class="schedule-id">
+                {{ emploi.id }}
+              </span>
+
+            </td>
+
+
+            <!-- COURS -->
+            <td>
+
+              <div class="course-cell">
+
+                <div class="course-icon">
+                  <i class="bi bi-book"></i>
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{ emploi.cours }}
+                  </strong>
+
+                  <span>
+                    Cours universitaire
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- ENSEIGNANT -->
+            <td>
+
+              <div class="teacher-cell">
+
+                <div class="avatar">
+                  {{ emploi.enseignant.charAt(3) }}
+                </div>
+
+                <span>
+                  {{ emploi.enseignant }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- FILIERE -->
+            <td>
+
+              <span class="badge badge-blue">
+                {{ emploi.filiere }}
+              </span>
+
+            </td>
+
+
+            <!-- NIVEAU -->
+            <td>
+
+              <span class="badge badge-purple">
+                {{ emploi.niveau }}
+              </span>
+
+            </td>
+
+
+            <!-- SALLE -->
+            <td>
+
+              <div class="room">
+
+                <i class="bi bi-door-open"></i>
+
+                {{ emploi.salle }}
+
+              </div>
+
+            </td>
+
+
+            <!-- JOUR -->
+            <td>
+
+              <span class="day">
+
+                <i class="bi bi-calendar3"></i>
+
+                {{ emploi.jour }}
+
+              </span>
+
+            </td>
+
+
+            <!-- HORAIRE -->
+            <td>
+
+              <span class="time">
+
+                <i class="bi bi-clock"></i>
+
+                {{ emploi.heure }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ACTIONS -->
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="action view"
+                  title="Voir"
+                  (click)="voir(emploi.id)">
+
+                  <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+
+                <button
+                  class="action edit"
+                  title="Modifier"
+                  (click)="modifier(emploi.id)">
+
+                  <i class="bi bi-pencil-fill"></i>
+
+                </button>
+
+
+                <button
+                  class="action delete"
+                  title="Supprimer"
+                  (click)="supprimer(emploi.id)">
+
+                  <i class="bi bi-trash3-fill"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- AUCUN RESULTAT -->
+          <tr *ngIf="filteredSchedules.length === 0">
+
+            <td
+              colspan="9"
+              class="empty-state">
+
+              <div class="empty-icon">
+                <i class="bi bi-calendar-x"></i>
+              </div>
+
+              <h3>
+                Aucun emploi du temps trouvé
+              </h3>
+
+              <p>
+                Essayez de modifier vos critères de recherche.
+              </p>
+
+              <button
+                (click)="resetFilters()">
+
+                Réinitialiser les filtres
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- FOOTER TABLEAU -->
+    <div class="table-footer">
+
+      <span>
+
+        Affichage de
+
+        <strong>
+          {{ filteredSchedules.length }}
+        </strong>
+
+        emploi(s)
+
+      </span>
+
+      <span class="status-info">
+
+        <i class="bi bi-check-circle-fill"></i>
+
+        Planning à jour
+
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- MODAL CREATION / MODIFICATION -->
+  <div
+    class="modal-backdrop"
+    *ngIf="showModal"
+    (click)="fermerModal()">
+
+    <div
+      class="modal"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+
+        <div class="modal-title">
+
+          <div class="modal-icon">
+            <i class="bi bi-calendar-plus"></i>
+          </div>
+
+          <div>
+
+            <h3>
+              {{ isEditing ? 'Modifier l’emploi du temps' : 'Nouvel emploi du temps' }}
+            </h3>
+
+            <p>
+              Renseignez les informations du cours
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="close-modal"
+          (click)="fermerModal()">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <div class="form-section">
+
+          <h4>
+            <i class="bi bi-book"></i>
+            Informations du cours
+          </h4>
+
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label>
+                Référence
+              </label>
+
+              <input
+                [(ngModel)]="newSchedule.id"
+                readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Intitulé du cours *
+              </label>
+
+              <input
+                [(ngModel)]="newSchedule.cours"
+                placeholder="Ex : Programmation Java">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Enseignant *
+              </label>
+
+              <input
+                [(ngModel)]="newSchedule.enseignant"
+                placeholder="Ex : M. Ndiaye">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Filière *
+              </label>
+
+              <select [(ngModel)]="newSchedule.filiere">
+
+                <option value="">
+                  Sélectionner une filière
+                </option>
+
+                <option value="Informatique">
+                  Informatique
+                </option>
+
+                <option value="Gestion">
+                  Gestion
+                </option>
+
+                <option value="Droit">
+                  Droit
+                </option>
+
+                <option value="Médecine">
+                  Médecine
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Niveau *
+              </label>
+
+              <select [(ngModel)]="newSchedule.niveau">
+
+                <option value="">
+                  Sélectionner un niveau
+                </option>
+
+                <option value="Licence 1">
+                  Licence 1
+                </option>
+
+                <option value="Licence 2">
+                  Licence 2
+                </option>
+
+                <option value="Licence 3">
+                  Licence 3
+                </option>
+
+                <option value="Master 1">
+                  Master 1
+                </option>
+
+                <option value="Master 2">
+                  Master 2
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-section">
+
+          <h4>
+            <i class="bi bi-geo-alt"></i>
+            Planification
+          </h4>
+
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label>
+                Salle *
+              </label>
+
+              <input
+                [(ngModel)]="newSchedule.salle"
+                placeholder="Ex : B101">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Jour *
+              </label>
+
+              <select [(ngModel)]="newSchedule.jour">
+
+                <option value="">
+                  Sélectionner un jour
+                </option>
+
+                <option value="Lundi">Lundi</option>
+                <option value="Mardi">Mardi</option>
+                <option value="Mercredi">Mercredi</option>
+                <option value="Jeudi">Jeudi</option>
+                <option value="Vendredi">Vendredi</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+              <label>
+                Horaire *
+              </label>
+
+              <input
+                [(ngModel)]="newSchedule.heure"
+                placeholder="Ex : 08:00 - 10:00">
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button
+          class="btn-cancel"
+          (click)="fermerModal()">
+
+          Annuler
+
+        </button>
+
+        <button
+          class="btn-save"
+          (click)="enregistrer()">
+
+          <i class="bi bi-check-lg"></i>
+
+          {{ isEditing ? 'Enregistrer les modifications' : 'Créer l’emploi du temps' }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MODAL DETAILS -->
+  <div
+    class="modal-backdrop"
+    *ngIf="showDetails"
+    (click)="fermerDetails()">
+
+    <div
+      class="details-modal"
+      (click)="$event.stopPropagation()"
+      *ngIf="selectedSchedule">
+
+      <div class="details-header">
+
+        <div class="details-course-icon">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+
+        <div>
+
+          <span class="details-id">
+            {{ selectedSchedule.id }}
+          </span>
+
+          <h2>
+            {{ selectedSchedule.cours }}
+          </h2>
+
+          <p>
+            Détails de l'emploi du temps
+          </p>
+
+        </div>
+
+        <button
+          class="close-modal"
+          (click)="fermerDetails()">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+      </div>
+
+
+      <div class="details-content">
+
+        <div class="detail-item">
+
+          <i class="bi bi-person"></i>
+
+          <div>
+            <span>Enseignant</span>
+            <strong>{{ selectedSchedule.enseignant }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <i class="bi bi-mortarboard"></i>
+
+          <div>
+            <span>Filière</span>
+            <strong>{{ selectedSchedule.filiere }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <i class="bi bi-bar-chart"></i>
+
+          <div>
+            <span>Niveau</span>
+            <strong>{{ selectedSchedule.niveau }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <i class="bi bi-door-open"></i>
+
+          <div>
+            <span>Salle</span>
+            <strong>{{ selectedSchedule.salle }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <i class="bi bi-calendar3"></i>
+
+          <div>
+            <span>Jour</span>
+            <strong>{{ selectedSchedule.jour }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <i class="bi bi-clock"></i>
+
+          <div>
+            <span>Horaire</span>
+            <strong>{{ selectedSchedule.heure }}</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="details-footer">
+
+        <button
+          class="btn-cancel"
+          (click)="fermerDetails()">
+
+          Fermer
+
+        </button>
+
+        <button
+          class="btn-save"
+          (click)="modifier(selectedSchedule.id); fermerDetails()">
+
+          <i class="bi bi-pencil"></i>
+
+          Modifier
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- MODAL EMPLOI DU TEMPS -->
+<div class="student-modal-backdrop" *ngIf="showModal">
+
+  <div class="student-modal">
+
+    <h3>
+      {{ isEditing ? 'Modifier l’emploi du temps' : 'Nouvel emploi du temps' }}
+    </h3>
+
+    <div class="form-grid">
+
+      <!-- ID -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.id"
+        placeholder="ID"
+        [readonly]="isEditing">
+
+      <!-- COURS -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.cours"
+        placeholder="Cours">
+
+      <!-- ENSEIGNANT -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.enseignant"
+        placeholder="Enseignant">
+
+      <!-- FILIÈRE -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.filiere"
+        placeholder="Filière">
+
+      <!-- NIVEAU -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.niveau"
+        placeholder="Niveau">
+
+      <!-- SALLE -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.salle"
+        placeholder="Salle">
+
+      <!-- JOUR -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.jour"
+        placeholder="Jour">
+
+      <!-- HORAIRE -->
+      <input
+        type="text"
+        [(ngModel)]="newSchedule.heure"
+        placeholder="08:00 - 10:00">
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        class="btn-cancel"
+        type="button"
+        (click)="fermerModal()">
+
+        Annuler
+
+      </button>
+
+      <button
+        class="btn-save"
+        type="button"
+        (click)="enregistrer()">
+
+        {{ isEditing ? 'Modifier' : 'Enregistrer' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,288 @@
+<div class="library-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+      <h2>Bibliothèque</h2>
+      <p>Gestion des livres de Smart University</p>
+    </div>
+
+    <button class="btn-primary" (click)="ouvrirModal()">
+      <i class="bi bi-plus-circle-fill"></i>
+      Nouveau livre
+    </button>
+
+  </div>
+
+  <!-- STATISTIQUES -->
+
+  <div class="stats">
+
+    <div class="stat-card blue">
+      <i class="bi bi-book-fill"></i>
+      <div>
+        <h3>{{ totalLivres }}</h3>
+        <p>Total des livres</p>
+      </div>
+    </div>
+
+    <div class="stat-card green">
+      <i class="bi bi-check-circle-fill"></i>
+      <div>
+        <h3>{{ disponibles }}</h3>
+        <p>Disponibles</p>
+      </div>
+    </div>
+
+    <div class="stat-card orange">
+      <i class="bi bi-arrow-left-right"></i>
+      <div>
+        <h3>{{ empruntes }}</h3>
+        <p>Empruntés</p>
+      </div>
+    </div>
+
+    <div class="stat-card purple">
+      <i class="bi bi-grid-fill"></i>
+      <div>
+        <h3>{{ categories }}</h3>
+        <p>Catégories</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FILTRES -->
+
+  <div class="filter-card">
+
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        placeholder="Rechercher un livre...">
+    </div>
+
+    <select>
+      <option>Toutes les catégories</option>
+      <option>Programmation</option>
+      <option>Gestion</option>
+      <option>Droit</option>
+      <option>Médecine</option>
+    </select>
+
+    <select>
+      <option>Tous les statuts</option>
+      <option>Disponible</option>
+      <option>Emprunté</option>
+      <option>Réservé</option>
+    </select>
+
+  </div>
+
+  <!-- TABLEAU -->
+
+  <div class="table-card">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Auteur</th>
+          <th>Catégorie</th>
+          <th>Année</th>
+          <th>Exemplaires</th>
+          <th>Statut</th>
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let livre of books">
+
+          <td>{{ livre.id }}</td>
+
+          <td>{{ livre.titre }}</td>
+
+          <td>{{ livre.auteur }}</td>
+
+          <td>{{ livre.categorie }}</td>
+
+          <td>{{ livre.annee }}</td>
+
+          <td>{{ livre.exemplaires }}</td>
+
+          <td>
+
+            <span
+              class="badge"
+              [ngClass]="{
+                'available': livre.statut === 'Disponible',
+                'borrowed': livre.statut === 'Emprunté',
+                'reserved': livre.statut === 'Réservé'
+              }">
+
+              {{ livre.statut }}
+
+            </span>
+
+          </td>
+
+          <td>
+
+            <button
+              class="action view"
+              (click)="voir(livre.id)">
+
+              <i class="bi bi-eye-fill"></i>
+
+            </button>
+
+            <button
+              class="action edit"
+              (click)="modifier(livre.id)">
+
+              <i class="bi bi-pencil-fill"></i>
+
+            </button>
+
+            <button
+              class="action delete"
+              (click)="supprimer(livre.id)">
+
+              <i class="bi bi-trash-fill"></i>
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- PAGINATION -->
+
+  <div class="pagination">
+
+    <div>
+
+      Affichage de
+
+      <strong>1</strong>
+
+      à
+
+      <strong>{{ books.length }}</strong>
+
+      sur
+
+      <strong>{{ books.length }}</strong>
+
+      livres
+
+    </div>
+
+    <div class="pages">
+
+      <button>
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <button class="current">
+        1
+      </button>
+
+      <button>
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal-backdrop" *ngIf="showModal">
+
+  <div class="modal">
+
+    <h3>Nouveau livre</h3>
+
+    <div class="form-grid">
+
+      <input
+        [(ngModel)]="newBook.id"
+        placeholder="ID">
+
+      <input
+        [(ngModel)]="newBook.titre"
+        placeholder="Titre">
+
+      <input
+        [(ngModel)]="newBook.auteur"
+        placeholder="Auteur">
+
+      <input
+        [(ngModel)]="newBook.categorie"
+        placeholder="Catégorie">
+
+      <input
+        type="number"
+        [(ngModel)]="newBook.annee"
+        placeholder="Année">
+
+      <input
+        type="number"
+        [(ngModel)]="newBook.exemplaires"
+        placeholder="Exemplaires">
+
+      <select [(ngModel)]="newBook.statut">
+
+        <option>Disponible</option>
+
+        <option>Emprunté</option>
+
+        <option>Réservé</option>
+
+      </select>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        class="btn-cancel"
+        (click)="fermerModal()">
+
+        Annuler
+
+      </button>
+
+      <button
+        class="btn-save"
+        (click)="enregistrerLivre()">
+
+        Enregistrer
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

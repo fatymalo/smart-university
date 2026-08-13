@@ -1,0 +1,81 @@
+<div class="login-page">
+
+  <div class="overlay"></div>
+
+  <div class="login-card">
+
+    <div class="left-panel">
+
+      <div class="logo-circle">
+    <i class="bi bi-mortarboard-fill"></i>
+</div>
+
+<span class="university-tag">
+    Excellence • Innovation • Technologie
+</span>
+
+      <h1>Smart University</h1>
+
+      <p>
+        Plateforme intelligente de gestion universitaire
+      </p>
+
+    </div>
+
+    <div class="right-panel">
+
+      <h2>Connexion</h2>
+
+      <p class="subtitle">
+        Connectez-vous à votre espace
+      </p>
+
+      <form>
+
+        <div class="input-group mb-4">
+
+          <span class="input-group-text">
+            <i class="bi bi-envelope-fill"></i>
+          </span>
+
+        <input
+  type="email"
+  class="form-control"
+  placeholder="Adresse email"
+  [(ngModel)]="email"
+  name="email">
+        </div>
+
+        <div class="input-group mb-4">
+
+          <span class="input-group-text">
+            <i class="bi bi-lock-fill"></i>
+          </span>
+
+        <input
+  type="password"
+  class="form-control"
+  placeholder="Mot de passe"
+  [(ngModel)]="password"
+  name="password">
+
+        </div>
+
+       <button
+  type="button"
+  class="btn login-btn w-100"
+  (click)="seConnecter()">
+
+  <i class="bi bi-box-arrow-in-right me-2"></i>
+
+  Se connecter
+
+</button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

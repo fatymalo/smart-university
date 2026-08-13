@@ -1,0 +1,185 @@
+<div class="settings-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+      <h2>Paramètres</h2>
+      <p>Configuration générale de Smart University</p>
+    </div>
+
+    <button class="btn-save" (click)="enregistrer()">
+      <i class="bi bi-floppy-fill"></i>
+      Enregistrer
+    </button>
+
+  </div>
+
+  <!-- PROFIL -->
+
+  <div class="card">
+
+    <h3>
+      <i class="bi bi-person-circle"></i>
+      Mon profil
+    </h3>
+
+    <div class="profile">
+
+      <img
+        [src]="profile.photo"
+        alt="Photo">
+
+      <div class="form-grid">
+
+        <input
+          type="text"
+          [(ngModel)]="profile.nom"
+          placeholder="Nom">
+
+        <input
+          type="email"
+          [(ngModel)]="profile.email"
+          placeholder="Email">
+
+        <input
+          type="text"
+          [(ngModel)]="profile.telephone"
+          placeholder="Téléphone">
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- UNIVERSITÉ -->
+
+  <div class="card">
+
+    <h3>
+      <i class="bi bi-buildings-fill"></i>
+      Université
+    </h3>
+
+    <div class="form-grid">
+
+      <input
+        type="text"
+        [(ngModel)]="university.nom"
+        placeholder="Nom de l'université">
+
+      <input
+        type="text"
+        [(ngModel)]="university.adresse"
+        placeholder="Adresse">
+
+      <input
+        type="text"
+        [(ngModel)]="university.ville"
+        placeholder="Ville">
+
+      <input
+        type="text"
+        [(ngModel)]="university.pays"
+        placeholder="Pays">
+
+    </div>
+
+  </div>
+
+  <!-- SÉCURITÉ -->
+
+  <div class="card">
+
+    <h3>
+      <i class="bi bi-shield-lock-fill"></i>
+      Sécurité
+    </h3>
+
+    <div class="form-grid">
+
+      <input
+        type="password"
+        [(ngModel)]="security.ancien"
+        placeholder="Ancien mot de passe">
+
+      <input
+        type="password"
+        [(ngModel)]="security.nouveau"
+        placeholder="Nouveau mot de passe">
+
+      <input
+        type="password"
+        [(ngModel)]="security.confirmation"
+        placeholder="Confirmer le mot de passe">
+
+    </div>
+
+  </div>
+
+  <!-- PRÉFÉRENCES -->
+
+  <div class="card">
+
+    <h3>
+      <i class="bi bi-sliders"></i>
+      Préférences
+    </h3>
+
+    <div class="preferences">
+
+      <label>
+
+        <span>Mode sombre</span>
+
+        <input
+          type="checkbox"
+          [(ngModel)]="preferences.darkMode">
+
+      </label>
+
+      <label>
+
+        <span>Notifications</span>
+
+        <input
+          type="checkbox"
+          [(ngModel)]="preferences.notifications">
+
+      </label>
+
+      <label>
+
+        <span>Langue</span>
+
+        <select [(ngModel)]="preferences.langue">
+
+          <option>Français</option>
+          <option>English</option>
+          <option>Español</option>
+
+        </select>
+
+      </label>
+
+      <label>
+
+        <span>Fuseau horaire</span>
+
+        <select [(ngModel)]="preferences.fuseau">
+
+          <option>Africa/Dakar</option>
+          <option>Europe/Paris</option>
+          <option>UTC</option>
+
+        </select>
+
+      </label>
+
+    </div>
+
+  </div>
+
+</div>

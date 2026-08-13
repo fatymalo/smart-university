@@ -1,0 +1,144 @@
+<div class="messages-page">
+
+    <!-- SIDEBAR CONTACTS -->
+
+    <div class="contacts">
+
+        <div class="contacts-header">
+
+            <h3>Messages</h3>
+
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input
+                    type="text"
+                    placeholder="Rechercher un contact...">
+            </div>
+
+        </div>
+
+        <div
+            class="contact"
+            *ngFor="let contact of contacts"
+            (click)="choisirContact(contact)"
+            [class.active]="selectedContact.id === contact.id">
+
+            <div class="avatar">
+
+                <img
+                    [src]="contact.photo"
+                    [alt]="contact.nom">
+
+                <span
+                    class="status"
+                    [class.online]="contact.online">
+                </span>
+
+            </div>
+
+            <div class="contact-info">
+
+                <h4>{{ contact.nom }}</h4>
+
+                <small>{{ contact.poste }}</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ZONE DE DISCUSSION -->
+
+    <div class="chat">
+
+        <!-- HEADER -->
+
+        <div class="chat-header">
+
+            <div class="user">
+
+                <img
+                    [src]="selectedContact.photo"
+                    [alt]="selectedContact.nom">
+
+                <div>
+
+                    <h3>{{ selectedContact.nom }}</h3>
+
+                    <small>
+
+                        {{ selectedContact.online ? 'En ligne' : 'Hors ligne' }}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="chat-actions">
+
+                <button>
+                    <i class="bi bi-telephone-fill"></i>
+                </button>
+
+                <button>
+                    <i class="bi bi-camera-video-fill"></i>
+                </button>
+
+                <button>
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- MESSAGES -->
+
+        <div class="chat-body">
+
+            <div
+                *ngFor="let message of messages"
+                class="message"
+                [class.me]="message.me">
+
+                <div class="bubble">
+
+                    <p>{{ message.text }}</p>
+
+                    <small>{{ message.time }}</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SAISIE -->
+
+        <div class="chat-footer">
+
+            <button class="icon-btn">
+                <i class="bi bi-paperclip"></i>
+            </button>
+
+            <input
+                type="text"
+                placeholder="Écrire un message..."
+                [(ngModel)]="newMessage"
+                (keyup.enter)="envoyerMessage()">
+
+            <button
+                class="send-btn"
+                (click)="envoyerMessage()">
+
+                <i class="bi bi-send-fill"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

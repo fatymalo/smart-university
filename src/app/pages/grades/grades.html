@@ -1,0 +1,902 @@
+<div class="grades-page">
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+
+  <div class="page-header">
+
+    <div class="title-line">
+
+      <div class="title-icon">
+        <i class="bi bi-mortarboard-fill"></i>
+      </div>
+
+      <div>
+        <h2>Gestion des Notes</h2>
+
+        <p>
+          Gérez les résultats académiques et les évaluations
+          des étudiants.
+        </p>
+      </div>
+
+    </div>
+
+    <button
+      class="btn-primary"
+      type="button"
+      (click)="ouvrirModal()">
+
+      <i class="bi bi-plus-lg"></i>
+
+      Nouvelle note
+
+    </button>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- STATISTIQUES -->
+  <!-- ===================================================== -->
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+        <i class="bi bi-journal-check"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Total des notes
+        </span>
+
+        <strong>
+          {{ totalNotes }}
+        </strong>
+
+        <small>
+          évaluations enregistrées
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon green">
+        <i class="bi bi-graph-up-arrow"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Moyenne générale
+        </span>
+
+        <strong>
+          {{ moyenneGenerale }}/20
+        </strong>
+
+        <small>
+          moyenne de la classe
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Taux de réussite
+        </span>
+
+        <strong>
+          {{ tauxReussite }}%
+        </strong>
+
+        <small>
+          étudiants ayant ≥ 10/20
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon purple">
+        <i class="bi bi-award-fill"></i>
+      </div>
+
+      <div>
+
+        <span class="stat-label">
+          Excellentes notes
+        </span>
+
+        <strong>
+          {{ excellentesNotes }}
+        </strong>
+
+        <small>
+          notes ≥ 16/20
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- FILTRES -->
+  <!-- ===================================================== -->
+
+  <div class="filter-card">
+
+    <div class="search-box">
+
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Rechercher par étudiant, cours ou ID...">
+
+    </div>
+
+
+    <select [(ngModel)]="selectedFiliere">
+
+      <option value="">
+        Toutes les filières
+      </option>
+
+      <option value="Informatique">
+        Informatique
+      </option>
+
+      <option value="Gestion">
+        Gestion
+      </option>
+
+      <option value="Droit">
+        Droit
+      </option>
+
+      <option value="Médecine">
+        Médecine
+      </option>
+
+    </select>
+
+
+    <select [(ngModel)]="selectedNiveau">
+
+      <option value="">
+        Tous les niveaux
+      </option>
+
+      <option value="Licence 1">
+        Licence 1
+      </option>
+
+      <option value="Licence 2">
+        Licence 2
+      </option>
+
+      <option value="Licence 3">
+        Licence 3
+      </option>
+
+      <option value="Master 1">
+        Master 1
+      </option>
+
+      <option value="Master 2">
+        Master 2
+      </option>
+
+    </select>
+
+
+    <button
+      type="button"
+      class="reset-btn"
+      (click)="resetFilters()">
+
+      <i class="bi bi-arrow-clockwise"></i>
+
+      Réinitialiser
+
+    </button>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- TABLEAU -->
+  <!-- ===================================================== -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h3>
+          Résultats académiques
+        </h3>
+
+        <span>
+          {{ filteredGrades.length }} résultat(s)
+        </span>
+
+      </div>
+
+      <div class="table-info">
+
+        <i class="bi bi-info-circle"></i>
+
+        Notes sur 20
+
+      </div>
+
+    </div>
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>ID</th>
+            <th>Étudiant</th>
+            <th>Cours</th>
+            <th>Filière</th>
+            <th>Niveau</th>
+            <th>CC</th>
+            <th>Devoir</th>
+            <th>Examen</th>
+            <th>Moyenne</th>
+            <th>Mention</th>
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let note of filteredGrades">
+
+            <td>
+
+              <span class="grade-id">
+                {{ note.id }}
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <div class="student-cell">
+
+                <div class="avatar">
+                  {{ note.etudiant.charAt(0).toUpperCase() }}
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{ note.etudiant }}
+                  </strong>
+
+                  <small>
+                    Étudiant
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <td>
+
+              <span class="course-name">
+                {{ note.cours }}
+              </span>
+
+            </td>
+
+
+            <td>
+              {{ note.filiere }}
+            </td>
+
+
+            <td>
+              {{ note.niveau }}
+            </td>
+
+
+            <td>
+              <span class="note-value">
+                {{ note.cc }}
+              </span>
+            </td>
+
+
+            <td>
+              <span class="note-value">
+                {{ note.devoir }}
+              </span>
+            </td>
+
+
+            <td>
+              <span class="note-value">
+                {{ note.examen }}
+              </span>
+            </td>
+
+
+            <td>
+
+              <div class="average">
+
+                <strong>
+                  {{ note.moyenne }}
+                </strong>
+
+                <span>/20</span>
+
+              </div>
+
+            </td>
+
+
+            <td>
+
+              <span
+                class="badge"
+                [ngClass]="{
+                  'excellent': note.mention === 'Excellent',
+                  'tresbien': note.mention === 'Très Bien',
+                  'bien': note.mention === 'Bien',
+                  'passable': note.mention === 'Passable',
+                  'echec': note.mention === 'Échec'
+                }">
+
+                <i
+                  class="bi"
+                  [ngClass]="{
+                    'bi-stars': note.mention === 'Excellent',
+                    'bi-award': note.mention === 'Très Bien',
+                    'bi-check-circle': note.mention === 'Bien',
+                    'bi-dash-circle': note.mention === 'Passable',
+                    'bi-x-circle': note.mention === 'Échec'
+                  }">
+                </i>
+
+                {{ note.mention }}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  class="action view"
+                  title="Voir"
+                  (click)="voir(note.id)">
+
+                  <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action edit"
+                  title="Modifier"
+                  (click)="modifier(note.id)">
+
+                  <i class="bi bi-pencil-fill"></i>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action delete"
+                  title="Supprimer"
+                  (click)="supprimer(note.id)">
+
+                  <i class="bi bi-trash3-fill"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- AUCUN RÉSULTAT -->
+
+          <tr *ngIf="filteredGrades.length === 0">
+
+            <td
+              colspan="11"
+              class="empty-state">
+
+              <div>
+
+                <i class="bi bi-search"></i>
+
+                <h3>
+                  Aucun résultat
+                </h3>
+
+                <p>
+                  Aucune note ne correspond à votre recherche.
+                </p>
+
+                <button
+                  type="button"
+                  (click)="resetFilters()">
+
+                  Réinitialiser les filtres
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="table-footer">
+
+      <span>
+
+        Affichage de
+
+        <strong>
+          {{ filteredGrades.length }}
+        </strong>
+
+        note(s)
+
+      </span>
+
+      <div class="pages">
+
+        <button type="button">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <button
+          type="button"
+          class="current">
+          1
+        </button>
+
+        <button type="button">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- MODAL NOUVELLE NOTE -->
+  <!-- ===================================================== -->
+
+  <div
+    class="modal-backdrop"
+    *ngIf="showModal"
+    (click)="fermerModal()">
+
+    <div
+      class="modal"
+      (click)="$event.stopPropagation()">
+
+      <!-- HEADER -->
+
+      <div class="modal-header">
+
+        <div class="modal-title">
+
+          <div class="modal-icon">
+
+            <i
+              class="bi"
+              [ngClass]="
+                isEditing
+                  ? 'bi-pencil-square'
+                  : 'bi-plus-lg'
+              ">
+            </i>
+
+          </div>
+
+          <div>
+
+            <h3>
+
+              {{
+                isEditing
+                  ? 'Modifier la note'
+                  : 'Nouvelle note'
+              }}
+
+            </h3>
+
+            <p>
+
+              {{
+                isEditing
+                  ? 'Modifier les informations de cette note'
+                  : 'Ajouter une nouvelle note académique'
+              }}
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="modal-close"
+          (click)="fermerModal()">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- FORMULAIRE -->
+
+      <div class="form-grid">
+
+        <!-- ID -->
+
+        <div class="form-group">
+
+          <label>
+            Identifiant
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-hash"></i>
+
+            <input
+              type="text"
+              [(ngModel)]="newGrade.id"
+              placeholder="N001"
+              [readonly]="isEditing">
+
+          </div>
+
+        </div>
+
+
+        <!-- ETUDIANT -->
+
+        <div class="form-group">
+
+          <label>
+            Étudiant <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-person"></i>
+
+            <input
+              type="text"
+              [(ngModel)]="newGrade.etudiant"
+              placeholder="Nom complet">
+
+          </div>
+
+        </div>
+
+
+        <!-- COURS -->
+
+        <div class="form-group full">
+
+          <label>
+            Cours <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-book"></i>
+
+            <input
+              type="text"
+              [(ngModel)]="newGrade.cours"
+              placeholder="Nom du cours">
+
+          </div>
+
+        </div>
+
+
+        <!-- FILIERE -->
+
+        <div class="form-group">
+
+          <label>
+            Filière <span>*</span>
+          </label>
+
+          <select
+            [(ngModel)]="newGrade.filiere">
+
+            <option value="">
+              Sélectionner une filière
+            </option>
+
+            <option value="Informatique">
+              Informatique
+            </option>
+
+            <option value="Gestion">
+              Gestion
+            </option>
+
+            <option value="Droit">
+              Droit
+            </option>
+
+            <option value="Médecine">
+              Médecine
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- NIVEAU -->
+
+        <div class="form-group">
+
+          <label>
+            Niveau <span>*</span>
+          </label>
+
+          <select
+            [(ngModel)]="newGrade.niveau">
+
+            <option value="">
+              Sélectionner un niveau
+            </option>
+
+            <option value="Licence 1">
+              Licence 1
+            </option>
+
+            <option value="Licence 2">
+              Licence 2
+            </option>
+
+            <option value="Licence 3">
+              Licence 3
+            </option>
+
+            <option value="Master 1">
+              Master 1
+            </option>
+
+            <option value="Master 2">
+              Master 2
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- SECTION ÉVALUATION -->
+
+        <div class="form-section-title full">
+
+          <i class="bi bi-bar-chart-fill"></i>
+
+          Évaluation
+
+        </div>
+
+
+        <!-- CC -->
+
+        <div class="form-group">
+
+          <label>
+            Contrôle continu
+          </label>
+
+          <div class="score-input">
+
+            <input
+              type="number"
+              [(ngModel)]="newGrade.cc"
+              min="0"
+              max="20"
+              step="0.5">
+
+            <span>
+              /20
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- DEVOIR -->
+
+        <div class="form-group">
+
+          <label>
+            Devoir
+          </label>
+
+          <div class="score-input">
+
+            <input
+              type="number"
+              [(ngModel)]="newGrade.devoir"
+              min="0"
+              max="20"
+              step="0.5">
+
+            <span>
+              /20
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- EXAMEN -->
+
+        <div class="form-group">
+
+          <label>
+            Examen
+          </label>
+
+          <div class="score-input">
+
+            <input
+              type="number"
+              [(ngModel)]="newGrade.examen"
+              min="0"
+              max="20"
+              step="0.5">
+
+            <span>
+              /20
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- INFORMATION -->
+
+      <div class="modal-info">
+
+        <i class="bi bi-info-circle-fill"></i>
+
+        <span>
+          La moyenne et la mention sont calculées automatiquement
+          à partir des trois notes.
+        </span>
+
+      </div>
+
+
+      <!-- ACTIONS -->
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="btn-cancel"
+          (click)="fermerModal()">
+
+          Annuler
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn-save"
+          (click)="enregistrer()">
+
+          <i
+            class="bi"
+            [ngClass]="
+              isEditing
+                ? 'bi-check-lg'
+                : 'bi-plus-lg'
+            ">
+          </i>
+
+          {{
+            isEditing
+              ? 'Enregistrer les modifications'
+              : 'Ajouter la note'
+          }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

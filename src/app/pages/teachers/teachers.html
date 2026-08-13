@@ -1,0 +1,1084 @@
+<div class="teachers-page">
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+
+  <div class="page-header">
+
+    <div class="header-left">
+
+      <div class="page-icon">
+        <i class="bi bi-person-workspace"></i>
+      </div>
+
+      <div>
+
+        <h2>Gestion des Enseignants</h2>
+
+        <p>
+          Gérez les enseignants, leurs départements,
+          leurs grades et leurs informations professionnelles.
+        </p>
+
+      </div>
+
+    </div>
+
+    <button
+      type="button"
+      class="btn-primary"
+      (click)="ouvrirModal()">
+
+      <i class="bi bi-plus-lg"></i>
+
+      Nouvel enseignant
+
+    </button>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- STATISTIQUES -->
+  <!-- ===================================================== -->
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+
+        <i class="bi bi-people-fill"></i>
+
+      </div>
+
+      <div>
+
+        <span>Total enseignants</span>
+
+        <strong>
+          {{ totalTeachers }}
+        </strong>
+
+        <small>
+          enseignants enregistrés
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon green">
+
+        <i class="bi bi-person-check-fill"></i>
+
+      </div>
+
+      <div>
+
+        <span>Enseignants actifs</span>
+
+        <strong>
+          {{ activeTeachers }}
+        </strong>
+
+        <small>
+          actuellement actifs
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+
+        <i class="bi bi-person-x-fill"></i>
+
+      </div>
+
+      <div>
+
+        <span>Suspendus</span>
+
+        <strong>
+          {{ suspendedTeachers }}
+        </strong>
+
+        <small>
+          comptes suspendus
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon purple">
+
+        <i class="bi bi-mortarboard-fill"></i>
+
+      </div>
+
+      <div>
+
+        <span>Professeurs</span>
+
+        <strong>
+          {{ professors }}
+        </strong>
+
+        <small>
+          grade professeur
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- FILTRES -->
+  <!-- ===================================================== -->
+
+  <div class="filter-card">
+
+    <div class="search-box">
+
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Rechercher un enseignant, email, téléphone...">
+
+    </div>
+
+
+    <select
+      [(ngModel)]="selectedDepartement">
+
+      <option value="">
+        Tous les départements
+      </option>
+
+      <option value="Informatique">
+        Informatique
+      </option>
+
+      <option value="Gestion">
+        Gestion
+      </option>
+
+      <option value="Droit">
+        Droit
+      </option>
+
+      <option value="Médecine">
+        Médecine
+      </option>
+
+    </select>
+
+
+    <select
+      [(ngModel)]="selectedGrade">
+
+      <option value="">
+        Tous les grades
+      </option>
+
+      <option value="Assistant">
+        Assistant
+      </option>
+
+      <option value="Maître de conférences">
+        Maître de conférences
+      </option>
+
+      <option value="Professeur">
+        Professeur
+      </option>
+
+    </select>
+
+
+    <select
+      [(ngModel)]="selectedStatut">
+
+      <option value="">
+        Tous les statuts
+      </option>
+
+      <option value="Actif">
+        Actif
+      </option>
+
+      <option value="Suspendu">
+        Suspendu
+      </option>
+
+    </select>
+
+
+    <button
+      type="button"
+      class="reset-btn"
+      (click)="resetFilters()">
+
+      <i class="bi bi-arrow-clockwise"></i>
+
+      Réinitialiser
+
+    </button>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- TABLE -->
+  <!-- ===================================================== -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h3>
+          Liste des enseignants
+        </h3>
+
+        <p>
+          {{ filteredTeachers.length }}
+          enseignant(s) affiché(s)
+        </p>
+
+      </div>
+
+      <div class="table-info">
+
+        <i class="bi bi-shield-check"></i>
+
+        Administration académique
+
+      </div>
+
+    </div>
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Enseignant</th>
+
+            <th>Matricule</th>
+
+            <th>Département</th>
+
+            <th>Grade</th>
+
+            <th>Téléphone</th>
+
+            <th>Email</th>
+
+            <th>Statut</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let teacher of filteredTeachers">
+
+            <!-- ENSEIGNANT -->
+
+            <td>
+
+              <div class="teacher-cell">
+
+                <img
+                  [src]="teacher.photo"
+                  [alt]="teacher.nom"
+                  class="teacher-photo">
+
+                <div>
+
+                  <strong>
+                    {{ teacher.nom }}
+                  </strong>
+
+                  <small>
+                    Enseignant
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- MATRICULE -->
+
+            <td>
+
+              <span class="teacher-id">
+
+                {{ teacher.id }}
+
+              </span>
+
+            </td>
+
+
+            <!-- DEPARTEMENT -->
+
+            <td>
+
+              <span class="department">
+
+                <i class="bi bi-building"></i>
+
+                {{ teacher.departement }}
+
+              </span>
+
+            </td>
+
+
+            <!-- GRADE -->
+
+            <td>
+
+              <span class="grade">
+
+                {{ teacher.grade }}
+
+              </span>
+
+            </td>
+
+
+            <!-- TELEPHONE -->
+
+            <td>
+
+              <span class="contact">
+
+                <i class="bi bi-telephone"></i>
+
+                {{ teacher.telephone }}
+
+              </span>
+
+            </td>
+
+
+            <!-- EMAIL -->
+
+            <td>
+
+              <span class="email">
+
+                <i class="bi bi-envelope"></i>
+
+                {{ teacher.email }}
+
+              </span>
+
+            </td>
+
+
+            <!-- STATUT -->
+
+            <td>
+
+              <span
+                class="badge"
+                [ngClass]="{
+                  'active': teacher.statut === 'Actif',
+                  'suspended': teacher.statut === 'Suspendu'
+                }">
+
+                <span class="status-dot"></span>
+
+                {{ teacher.statut }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ACTIONS -->
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  class="action view"
+                  title="Voir le profil"
+                  (click)="voirTeacher(teacher.id)">
+
+                  <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action edit"
+                  title="Modifier"
+                  (click)="modifierTeacher(teacher.id)">
+
+                  <i class="bi bi-pencil-fill"></i>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action delete"
+                  title="Supprimer"
+                  (click)="supprimerTeacher(teacher.id)">
+
+                  <i class="bi bi-trash3-fill"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- AUCUN RÉSULTAT -->
+
+          <tr
+            *ngIf="filteredTeachers.length === 0">
+
+            <td
+              colspan="8"
+              class="empty-state">
+
+              <div>
+
+                <div class="empty-icon">
+
+                  <i class="bi bi-person-x"></i>
+
+                </div>
+
+                <h3>
+                  Aucun enseignant trouvé
+                </h3>
+
+                <p>
+                  Aucun enseignant ne correspond
+                  aux critères sélectionnés.
+                </p>
+
+                <button
+                  type="button"
+                  (click)="resetFilters()">
+
+                  Réinitialiser les filtres
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="table-footer">
+
+      <span>
+
+        Affichage de
+
+        <strong>
+          {{ filteredTeachers.length }}
+        </strong>
+
+        sur
+
+        <strong>
+          {{ teachers.length }}
+        </strong>
+
+        enseignant(s)
+
+      </span>
+
+      <div class="footer-label">
+
+        <i class="bi bi-database-check"></i>
+
+        Données académiques
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- MODAL NOUVEL ENSEIGNANT / MODIFICATION -->
+<!-- ========================================================= -->
+
+<div
+  class="modal-backdrop"
+  *ngIf="showModal"
+  (click)="fermerModal()">
+
+
+  <div
+    class="modal"
+    (click)="$event.stopPropagation()">
+
+
+    <!-- HEADER MODAL -->
+
+    <div class="modal-header">
+
+      <div class="modal-title">
+
+        <div class="modal-icon">
+
+          <i
+            class="bi"
+            [ngClass]="{
+              'bi-person-plus-fill': !isEditing,
+              'bi-pencil-square': isEditing
+            }">
+          </i>
+
+        </div>
+
+        <div>
+
+          <h3>
+
+            {{
+              isEditing
+                ? 'Modifier l’enseignant'
+                : 'Nouvel enseignant'
+            }}
+
+          </h3>
+
+          <p>
+
+            {{
+              isEditing
+                ? 'Modifiez les informations professionnelles.'
+                : 'Ajoutez un nouvel enseignant à Smart University.'
+            }}
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="modal-close"
+        (click)="fermerModal()">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <!-- FORMULAIRE -->
+
+    <div class="form-grid">
+
+
+      <!-- MATRICULE -->
+
+      <div class="form-group">
+
+        <label>
+          Matricule
+          <span>*</span>
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-hash"></i>
+
+          <input
+            type="text"
+            [(ngModel)]="newTeacher.id"
+            [readonly]="isEditing"
+            placeholder="ENS005">
+
+        </div>
+
+      </div>
+
+
+      <!-- NOM -->
+
+      <div class="form-group">
+
+        <label>
+          Nom complet
+          <span>*</span>
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-person"></i>
+
+          <input
+            type="text"
+            [(ngModel)]="newTeacher.nom"
+            placeholder="Ex : Abdoulaye Sow">
+
+        </div>
+
+      </div>
+
+
+      <!-- DEPARTEMENT -->
+
+      <div class="form-group">
+
+        <label>
+          Département
+          <span>*</span>
+        </label>
+
+        <select
+          [(ngModel)]="newTeacher.departement">
+
+          <option value="">
+            Sélectionner un département
+          </option>
+
+          <option value="Informatique">
+            Informatique
+          </option>
+
+          <option value="Gestion">
+            Gestion
+          </option>
+
+          <option value="Droit">
+            Droit
+          </option>
+
+          <option value="Médecine">
+            Médecine
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- GRADE -->
+
+      <div class="form-group">
+
+        <label>
+          Grade
+          <span>*</span>
+        </label>
+
+        <select
+          [(ngModel)]="newTeacher.grade">
+
+          <option value="">
+            Sélectionner un grade
+          </option>
+
+          <option value="Assistant">
+            Assistant
+          </option>
+
+          <option value="Maître de conférences">
+            Maître de conférences
+          </option>
+
+          <option value="Professeur">
+            Professeur
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- TELEPHONE -->
+
+      <div class="form-group">
+
+        <label>
+          Téléphone
+          <span>*</span>
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-telephone"></i>
+
+          <input
+            type="tel"
+            [(ngModel)]="newTeacher.telephone"
+            placeholder="77 123 45 67">
+
+        </div>
+
+      </div>
+
+
+      <!-- EMAIL -->
+
+      <div class="form-group">
+
+        <label>
+          Adresse email
+          <span>*</span>
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-envelope"></i>
+
+          <input
+            type="email"
+            [(ngModel)]="newTeacher.email"
+            placeholder="enseignant@universite.sn">
+
+        </div>
+
+      </div>
+
+
+      <!-- STATUT -->
+
+      <div class="form-group">
+
+        <label>
+          Statut
+        </label>
+
+        <select
+          [(ngModel)]="newTeacher.statut">
+
+          <option value="Actif">
+            Actif
+          </option>
+
+          <option value="Suspendu">
+            Suspendu
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- PHOTO -->
+
+      <div class="form-group">
+
+        <label>
+          URL de la photo
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-image"></i>
+
+          <input
+            type="text"
+            [(ngModel)]="newTeacher.photo"
+            placeholder="https://...">
+
+        </div>
+
+      </div>
+
+
+      <!-- APERCU -->
+
+      <div class="photo-preview">
+
+        <img
+          [src]="newTeacher.photo || 'https://i.pravatar.cc/150'"
+          alt="Aperçu">
+
+        <div>
+
+          <strong>
+            Aperçu du profil
+          </strong>
+
+          <span>
+            La photo sera affichée dans la liste.
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- INFORMATION -->
+
+    <div class="modal-info">
+
+      <i class="bi bi-info-circle-fill"></i>
+
+      <span>
+        Les champs marqués d'un astérisque sont obligatoires.
+      </span>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="modal-actions">
+
+      <button
+        type="button"
+        class="btn-cancel"
+        (click)="fermerModal()">
+
+        <i class="bi bi-x-lg"></i>
+
+        Annuler
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn-save"
+        (click)="enregistrerTeacher()">
+
+        <i
+          class="bi"
+          [ngClass]="{
+            'bi-check-lg': isEditing,
+            'bi-person-plus-fill': !isEditing
+          }">
+        </i>
+
+        {{
+          isEditing
+            ? 'Enregistrer les modifications'
+            : 'Ajouter l’enseignant'
+        }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- MODAL PROFIL -->
+<!-- ========================================================= -->
+
+<div
+  class="modal-backdrop"
+  *ngIf="showProfileModal"
+  (click)="fermerProfile()">
+
+
+  <div
+    class="profile-modal"
+    (click)="$event.stopPropagation()"
+    *ngIf="selectedTeacher">
+
+
+    <div class="profile-header">
+
+      <button
+        type="button"
+        class="modal-close"
+        (click)="fermerProfile()">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+      <img
+        [src]="selectedTeacher.photo"
+        [alt]="selectedTeacher.nom"
+        class="profile-photo">
+
+      <h3>
+        {{ selectedTeacher.nom }}
+      </h3>
+
+      <p>
+        {{ selectedTeacher.grade }}
+      </p>
+
+      <span
+        class="badge"
+        [ngClass]="{
+          'active': selectedTeacher.statut === 'Actif',
+          'suspended': selectedTeacher.statut === 'Suspendu'
+        }">
+
+        <span class="status-dot"></span>
+
+        {{ selectedTeacher.statut }}
+
+      </span>
+
+    </div>
+
+
+    <div class="profile-content">
+
+      <div class="profile-item">
+
+        <i class="bi bi-person-badge"></i>
+
+        <div>
+
+          <span>Matricule</span>
+
+          <strong>
+            {{ selectedTeacher.id }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="profile-item">
+
+        <i class="bi bi-building"></i>
+
+        <div>
+
+          <span>Département</span>
+
+          <strong>
+            {{ selectedTeacher.departement }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="profile-item">
+
+        <i class="bi bi-envelope"></i>
+
+        <div>
+
+          <span>Email</span>
+
+          <strong>
+            {{ selectedTeacher.email }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="profile-item">
+
+        <i class="bi bi-telephone"></i>
+
+        <div>
+
+          <span>Téléphone</span>
+
+          <strong>
+            {{ selectedTeacher.telephone }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="profile-actions">
+
+      <button
+        type="button"
+        class="btn-cancel"
+        (click)="fermerProfile()">
+
+        Fermer
+
+      </button>
+
+      <button
+        type="button"
+        class="btn-save"
+        (click)="fermerProfile(); modifierTeacher(selectedTeacher.id)">
+
+        <i class="bi bi-pencil-fill"></i>
+
+        Modifier
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

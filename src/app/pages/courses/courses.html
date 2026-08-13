@@ -1,0 +1,1148 @@
+<div class="courses-page">
+
+  <!-- ================================================= -->
+  <!-- HEADER -->
+  <!-- ================================================= -->
+
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <div class="title-icon">
+        <i class="bi bi-book"></i>
+      </div>
+
+      <div>
+
+        <span class="page-label">
+          ACADÉMIQUE
+        </span>
+
+        <h1>
+          Gestion des cours
+        </h1>
+
+        <p>
+          Gérez les enseignements, les enseignants et les ressources pédagogiques de Smart University.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="btn-primary"
+      (click)="ouvrirModal()">
+
+      <i class="bi bi-plus-lg"></i>
+
+      <span>
+        Nouveau cours
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- STATISTIQUES -->
+  <!-- ================================================= -->
+
+  <div class="stats-grid">
+
+
+    <!-- TOTAL COURS -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+        <i class="bi bi-journal-bookmark-fill"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>
+          Total des cours
+        </span>
+
+        <strong>
+          {{ totalCourses }}
+        </strong>
+
+        <small>
+          Cours enregistrés
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- CREDITS -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon purple">
+        <i class="bi bi-award-fill"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>
+          Crédits académiques
+        </span>
+
+        <strong>
+          {{ totalCredits }}
+        </strong>
+
+        <small>
+          Crédits disponibles
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- ENSEIGNANTS -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon green">
+        <i class="bi bi-person-workspace"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>
+          Enseignants
+        </span>
+
+        <strong>
+          {{ totalTeachers }}
+        </strong>
+
+        <small>
+          Enseignants actifs
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- DISPONIBLES -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>
+          Cours disponibles
+        </span>
+
+        <strong>
+          {{ availableCourses }}
+        </strong>
+
+        <small>
+          Places disponibles
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- FILTRES -->
+  <!-- ================================================= -->
+
+  <div class="filter-card">
+
+    <div class="filter-title">
+
+      <div class="filter-title-icon">
+        <i class="bi bi-funnel-fill"></i>
+      </div>
+
+      <div>
+
+        <strong>
+          Recherche et filtres
+        </strong>
+
+        <span>
+          Trouvez rapidement un cours
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- RECHERCHE -->
+
+    <div class="search-box">
+
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Rechercher par code, cours, enseignant...">
+
+      <button
+        *ngIf="searchTerm"
+        type="button"
+        class="clear-search"
+        (click)="searchTerm = ''">
+
+        <i class="bi bi-x"></i>
+
+      </button>
+
+    </div>
+
+
+    <!-- FILIERE -->
+
+    <select
+      [(ngModel)]="selectedFiliere"
+      class="filter-select">
+
+      <option value="">
+        Toutes les filières
+      </option>
+
+      <option value="Informatique">
+        Informatique
+      </option>
+
+      <option value="Gestion">
+        Gestion
+      </option>
+
+      <option value="Droit">
+        Droit
+      </option>
+
+      <option value="Médecine">
+        Médecine
+      </option>
+
+    </select>
+
+
+    <!-- SEMESTRE -->
+
+    <select
+      [(ngModel)]="selectedSemestre"
+      class="filter-select">
+
+      <option value="">
+        Tous les semestres
+      </option>
+
+      <option value="S1">S1</option>
+      <option value="S2">S2</option>
+      <option value="S3">S3</option>
+      <option value="S4">S4</option>
+      <option value="S5">S5</option>
+      <option value="S6">S6</option>
+
+    </select>
+
+
+    <!-- STATUT -->
+
+    <select
+      [(ngModel)]="selectedStatut"
+      class="filter-select">
+
+      <option value="">
+        Tous les statuts
+      </option>
+
+      <option value="Disponible">
+        Disponible
+      </option>
+
+      <option value="Complet">
+        Complet
+      </option>
+
+    </select>
+
+
+    <!-- RESET -->
+
+    <button
+      type="button"
+      class="reset-button"
+      (click)="resetFilters()">
+
+      <i class="bi bi-arrow-counterclockwise"></i>
+
+      Réinitialiser
+
+    </button>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- TABLEAU -->
+  <!-- ================================================= -->
+
+  <div class="table-card">
+
+
+    <!-- TABLE HEADER -->
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Catalogue des cours
+        </h2>
+
+        <p>
+          Liste des enseignements proposés par l'université
+        </p>
+
+      </div>
+
+      <div class="result-count">
+
+        <i class="bi bi-list-check"></i>
+
+        {{ filteredCourses.length }}
+        cours
+
+      </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Code
+            </th>
+
+            <th>
+              Cours
+            </th>
+
+            <th>
+              Filière
+            </th>
+
+            <th>
+              Semestre
+            </th>
+
+            <th>
+              Enseignant
+            </th>
+
+            <th>
+              Crédits
+            </th>
+
+            <th>
+              Salle
+            </th>
+
+            <th>
+              Statut
+            </th>
+
+            <th class="actions-column">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <!-- RESULTATS -->
+
+          <tr
+            *ngFor="let cours of filteredCourses">
+
+            <!-- CODE -->
+
+            <td>
+
+              <span class="course-code">
+                {{ cours.code }}
+              </span>
+
+            </td>
+
+
+            <!-- COURS -->
+
+            <td>
+
+              <div class="course-name">
+
+                <div class="course-icon">
+                  <i class="bi bi-book"></i>
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{ cours.nom }}
+                  </strong>
+
+                  <small>
+                    {{ cours.credits }} crédits
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- FILIERE -->
+
+            <td>
+
+              <span class="filiere-badge">
+                {{ cours.filiere }}
+              </span>
+
+            </td>
+
+
+            <!-- SEMESTRE -->
+
+            <td>
+
+              <span class="semester">
+                {{ cours.semestre }}
+              </span>
+
+            </td>
+
+
+            <!-- ENSEIGNANT -->
+
+            <td>
+
+              <div class="teacher">
+
+                <div class="teacher-avatar">
+
+                  {{ cours.enseignant.charAt(0) }}
+
+                </div>
+
+                <span>
+                  {{ cours.enseignant }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- CREDITS -->
+
+            <td>
+
+              <strong class="credits">
+                {{ cours.credits }}
+              </strong>
+
+            </td>
+
+
+            <!-- SALLE -->
+
+            <td>
+
+              <span class="room">
+
+                <i class="bi bi-geo-alt"></i>
+
+                {{ cours.salle }}
+
+              </span>
+
+            </td>
+
+
+            <!-- STATUT -->
+
+            <td>
+
+              <span
+                class="status"
+                [ngClass]="{
+                  'available': cours.statut === 'Disponible',
+                  'full': cours.statut === 'Complet'
+                }">
+
+                <span class="status-dot"></span>
+
+                {{ cours.statut }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ACTIONS -->
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  class="action-btn view"
+                  title="Voir"
+                  (click)="voirCours(cours.code)">
+
+                  <i class="bi bi-eye"></i>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action-btn edit"
+                  title="Modifier"
+                  (click)="modifierCours(cours.code)">
+
+                  <i class="bi bi-pencil"></i>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action-btn delete"
+                  title="Supprimer"
+                  (click)="supprimerCours(cours.code)">
+
+                  <i class="bi bi-trash3"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- AUCUN RESULTAT -->
+
+          <tr
+            *ngIf="filteredCourses.length === 0">
+
+            <td
+              colspan="9"
+              class="empty-state">
+
+              <div class="empty-icon">
+
+                <i class="bi bi-search"></i>
+
+              </div>
+
+              <h3>
+                Aucun cours trouvé
+              </h3>
+
+              <p>
+                Aucun cours ne correspond à vos critères de recherche.
+              </p>
+
+              <button
+                type="button"
+                class="empty-button"
+                (click)="resetFilters()">
+
+                Réinitialiser les filtres
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- TABLE FOOTER -->
+
+    <div class="table-footer">
+
+      <span>
+
+        Affichage de
+
+        <strong>
+          {{ filteredCourses.length }}
+        </strong>
+
+        cours
+
+      </span>
+
+      <div class="table-info">
+
+        <i class="bi bi-info-circle"></i>
+
+        Données de Smart University
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MODAL AJOUT / MODIFICATION -->
+<!-- ================================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showModal"
+  (click)="fermerModal()">
+
+
+  <div
+    class="course-modal"
+    (click)="$event.stopPropagation()">
+
+
+    <!-- MODAL HEADER -->
+
+    <div class="modal-header">
+
+      <div class="modal-title">
+
+        <div class="modal-icon">
+
+          <i
+            class="bi"
+            [ngClass]="{
+              'bi-plus-lg': !isEditing,
+              'bi-pencil-lg': isEditing
+            }">
+          </i>
+
+        </div>
+
+        <div>
+
+          <h2>
+            {{ isEditing ? 'Modifier le cours' : 'Nouveau cours' }}
+          </h2>
+
+          <p>
+            {{
+              isEditing
+                ? 'Modifiez les informations du cours'
+                : 'Ajoutez un nouveau cours à Smart University'
+            }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-modal"
+        (click)="fermerModal()">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <!-- MODAL BODY -->
+
+    <div class="modal-body">
+
+
+      <div class="form-grid">
+
+
+        <!-- CODE -->
+
+        <div class="form-group">
+
+          <label>
+            Code du cours
+            <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-upc-scan"></i>
+
+            <input
+              type="text"
+              [(ngModel)]="newCourse.code"
+              [readonly]="isEditing"
+              placeholder="Ex : INFO301">
+
+          </div>
+
+        </div>
+
+
+        <!-- NOM -->
+
+        <div class="form-group">
+
+          <label>
+            Nom du cours
+            <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-book"></i>
+
+            <input
+              type="text"
+              [(ngModel)]="newCourse.nom"
+              placeholder="Ex : Intelligence Artificielle">
+
+          </div>
+
+        </div>
+
+
+        <!-- FILIERE -->
+
+        <div class="form-group">
+
+          <label>
+            Filière
+            <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-mortarboard"></i>
+
+            <select
+              [(ngModel)]="newCourse.filiere">
+
+              <option value="">
+                Sélectionner une filière
+              </option>
+
+              <option value="Informatique">
+                Informatique
+              </option>
+
+              <option value="Gestion">
+                Gestion
+              </option>
+
+              <option value="Droit">
+                Droit
+              </option>
+
+              <option value="Médecine">
+                Médecine
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- SEMESTRE -->
+
+        <div class="form-group">
+
+          <label>
+            Semestre
+            <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-calendar3"></i>
+
+            <select
+              [(ngModel)]="newCourse.semestre">
+
+              <option value="">
+                Sélectionner un semestre
+              </option>
+
+              <option value="S1">S1</option>
+              <option value="S2">S2</option>
+              <option value="S3">S3</option>
+              <option value="S4">S4</option>
+              <option value="S5">S5</option>
+              <option value="S6">S6</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- ENSEIGNANT -->
+
+        <div class="form-group">
+
+          <label>
+            Enseignant
+            <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-person"></i>
+
+            <input
+              type="text"
+              [(ngModel)]="newCourse.enseignant"
+              placeholder="Ex : Mamadou Diop">
+
+          </div>
+
+        </div>
+
+
+        <!-- CREDITS -->
+
+        <div class="form-group">
+
+          <label>
+            Crédits ECTS
+            <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-award"></i>
+
+            <input
+              type="number"
+              [(ngModel)]="newCourse.credits"
+              min="1"
+              max="30"
+              placeholder="Ex : 6">
+
+          </div>
+
+        </div>
+
+
+        <!-- SALLE -->
+
+        <div class="form-group">
+
+          <label>
+            Salle
+            <span>*</span>
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-building"></i>
+
+            <input
+              type="text"
+              [(ngModel)]="newCourse.salle"
+              placeholder="Ex : B204">
+
+          </div>
+
+        </div>
+
+
+        <!-- STATUT -->
+
+        <div class="form-group">
+
+          <label>
+            Statut
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-toggle-on"></i>
+
+            <select
+              [(ngModel)]="newCourse.statut">
+
+              <option value="Disponible">
+                Disponible
+              </option>
+
+              <option value="Complet">
+                Complet
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- MODAL FOOTER -->
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="fermerModal()">
+
+        Annuler
+
+      </button>
+
+      <button
+        type="button"
+        class="save-button"
+        (click)="enregistrerCours()">
+
+        <i
+          class="bi"
+          [ngClass]="{
+            'bi-plus-circle': !isEditing,
+            'bi-check-circle': isEditing
+          }">
+        </i>
+
+        {{ isEditing ? 'Enregistrer les modifications' : 'Ajouter le cours' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MODAL DETAILS -->
+<!-- ================================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showDetailsModal"
+  (click)="fermerDetails()">
+
+
+  <div
+    class="details-modal"
+    (click)="$event.stopPropagation()"
+    *ngIf="selectedCourse">
+
+
+    <!-- HEADER -->
+
+    <div class="details-header">
+
+      <div class="details-course-icon">
+
+        <i class="bi bi-book"></i>
+
+      </div>
+
+      <div>
+
+        <span>
+          {{ selectedCourse.code }}
+        </span>
+
+        <h2>
+          {{ selectedCourse.nom }}
+        </h2>
+
+      </div>
+
+      <button
+        type="button"
+        class="close-modal"
+        (click)="fermerDetails()">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <!-- DETAILS -->
+
+    <div class="details-grid">
+
+
+      <div class="detail-item">
+
+        <span>
+          Filière
+        </span>
+
+        <strong>
+          {{ selectedCourse.filiere }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Semestre
+        </span>
+
+        <strong>
+          {{ selectedCourse.semestre }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Enseignant
+        </span>
+
+        <strong>
+          {{ selectedCourse.enseignant }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Crédits
+        </span>
+
+        <strong>
+          {{ selectedCourse.credits }} ECTS
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Salle
+        </span>
+
+        <strong>
+          {{ selectedCourse.salle }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Statut
+        </span>
+
+        <strong
+          [class.text-success]="selectedCourse.statut === 'Disponible'"
+          [class.text-danger]="selectedCourse.statut === 'Complet'">
+
+          {{ selectedCourse.statut }}
+
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="details-footer">
+
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="fermerDetails()">
+
+        Fermer
+
+      </button>
+
+      <button
+        type="button"
+        class="save-button"
+        (click)="modifierCours(selectedCourse.code); fermerDetails()">
+
+        <i class="bi bi-pencil"></i>
+
+        Modifier
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

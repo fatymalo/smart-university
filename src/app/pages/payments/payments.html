@@ -1,0 +1,295 @@
+<div class="payments-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+      <h2>Gestion des Paiements</h2>
+      <p>Administration des frais de scolarité</p>
+    </div>
+
+    <button class="btn-primary" (click)="ouvrirModal()">
+      <i class="bi bi-plus-circle-fill"></i>
+      Nouveau paiement
+    </button>
+
+  </div>
+
+  <!-- STATISTIQUES -->
+
+  <div class="stats">
+
+    <div class="stat-card blue">
+      <i class="bi bi-cash-stack"></i>
+
+      <div>
+        <h3>{{ totalEncaisse | number }} FCFA</h3>
+        <p>Total encaissé</p>
+      </div>
+
+    </div>
+
+    <div class="stat-card green">
+      <i class="bi bi-wallet2"></i>
+
+      <div>
+        <h3>{{ payments.length }}</h3>
+        <p>Paiements</p>
+      </div>
+
+    </div>
+
+    <div class="stat-card orange">
+      <i class="bi bi-hourglass-split"></i>
+
+      <div>
+        <h3>{{ totalAttente }}</h3>
+        <p>En attente</p>
+      </div>
+
+    </div>
+
+    <div class="stat-card red">
+      <i class="bi bi-exclamation-circle-fill"></i>
+
+      <div>
+        <h3>{{ totalImpayes }}</h3>
+        <p>Impayés</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FILTRES -->
+
+  <div class="filter-card">
+
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        placeholder="Rechercher un étudiant...">
+    </div>
+
+    <select>
+      <option>Toutes les filières</option>
+      <option>Informatique</option>
+      <option>Gestion</option>
+      <option>Droit</option>
+      <option>Médecine</option>
+    </select>
+
+    <select>
+      <option>Tous les statuts</option>
+      <option>Payé</option>
+      <option>En attente</option>
+      <option>Impayé</option>
+    </select>
+
+  </div>
+
+  <!-- TABLEAU -->
+
+  <div class="table-card">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>ID</th>
+          <th>Étudiant</th>
+          <th>Filière</th>
+          <th>Niveau</th>
+          <th>Montant</th>
+          <th>Date</th>
+          <th>Mode</th>
+          <th>Statut</th>
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let paiement of payments">
+
+          <td>{{ paiement.id }}</td>
+          <td>{{ paiement.etudiant }}</td>
+          <td>{{ paiement.filiere }}</td>
+          <td>{{ paiement.niveau }}</td>
+
+          <td>
+            <strong>{{ paiement.montant | number }} FCFA</strong>
+          </td>
+
+          <td>{{ paiement.date }}</td>
+
+          <td>{{ paiement.mode }}</td>
+
+          <td>
+
+            <span
+              class="badge"
+              [ngClass]="{
+                'paid': paiement.statut==='Payé',
+                'waiting': paiement.statut==='En attente',
+                'unpaid': paiement.statut==='Impayé'
+              }">
+
+              {{ paiement.statut }}
+
+            </span>
+
+          </td>
+
+          <td>
+
+            <button
+              class="action view"
+              (click)="voir(paiement.id)">
+
+              <i class="bi bi-eye-fill"></i>
+
+            </button>
+
+            <button
+              class="action edit"
+              (click)="modifier(paiement.id)">
+
+              <i class="bi bi-pencil-fill"></i>
+
+            </button>
+
+            <button
+              class="action delete"
+              (click)="supprimer(paiement.id)">
+
+              <i class="bi bi-trash-fill"></i>
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- PAGINATION -->
+
+  <div class="pagination">
+
+    <div>
+
+      Affichage de
+      <strong>1</strong>
+      à
+      <strong>{{ payments.length }}</strong>
+      sur
+      <strong>{{ payments.length }}</strong>
+
+    </div>
+
+    <div class="pages">
+
+      <button>
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <button class="current">
+        1
+      </button>
+
+      <button>
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal-backdrop" *ngIf="showModal">
+
+  <div class="modal">
+
+    <h3>Nouveau paiement</h3>
+
+    <div class="form-grid">
+
+      <input
+        [(ngModel)]="newPayment.id"
+        placeholder="ID Paiement">
+
+      <input
+        [(ngModel)]="newPayment.etudiant"
+        placeholder="Étudiant">
+
+      <input
+        [(ngModel)]="newPayment.filiere"
+        placeholder="Filière">
+
+      <input
+        [(ngModel)]="newPayment.niveau"
+        placeholder="Niveau">
+
+      <input
+        type="number"
+        [(ngModel)]="newPayment.montant"
+        placeholder="Montant">
+
+      <input
+        type="date"
+        [(ngModel)]="newPayment.date">
+
+      <select [(ngModel)]="newPayment.mode">
+        <option value="">Mode de paiement</option>
+        <option>Espèces</option>
+        <option>Wave</option>
+        <option>Orange Money</option>
+        <option>Carte bancaire</option>
+        <option>Virement bancaire</option>
+      </select>
+
+      <select [(ngModel)]="newPayment.statut">
+        <option>Payé</option>
+        <option>En attente</option>
+        <option>Impayé</option>
+      </select>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        class="btn-cancel"
+        (click)="fermerModal()">
+
+        Annuler
+
+      </button>
+
+      <button
+        class="btn-save"
+        (click)="enregistrerPaiement()">
+
+        Enregistrer
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

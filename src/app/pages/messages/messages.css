@@ -1,0 +1,291 @@
+.messages-page{
+    display:grid;
+    grid-template-columns:350px 1fr;
+    height:100vh;
+    background:#F5F7FB;
+}
+
+/* =========================
+   CONTACTS
+========================= */
+
+.contacts{
+    background:#ffffff;
+    border-right:1px solid #E5E7EB;
+    display:flex;
+    flex-direction:column;
+}
+
+.contacts-header{
+    padding:25px;
+    border-bottom:1px solid #E5E7EB;
+}
+
+.contacts-header h3{
+    margin:0 0 20px;
+    color:#111827;
+    font-size:26px;
+}
+
+.search-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#F3F4F6;
+    padding:12px 15px;
+    border-radius:12px;
+}
+
+.search-box input{
+    width:100%;
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:15px;
+}
+
+.contact{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:18px 22px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.contact:hover{
+    background:#EFF6FF;
+}
+
+.contact.active{
+    background:#DBEAFE;
+}
+
+.avatar{
+    position:relative;
+}
+
+.avatar img{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.status{
+    position:absolute;
+    bottom:2px;
+    right:2px;
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    background:#9CA3AF;
+    border:2px solid white;
+}
+
+.status.online{
+    background:#22C55E;
+}
+
+.contact-info h4{
+    margin:0;
+    color:#111827;
+    font-size:16px;
+}
+
+.contact-info small{
+    color:#6B7280;
+}
+
+/* =========================
+   CHAT
+========================= */
+
+.chat{
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+
+.chat-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 30px;
+    background:white;
+    border-bottom:1px solid #E5E7EB;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.user img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+}
+
+.user h3{
+    margin:0;
+}
+
+.user small{
+    color:#6B7280;
+}
+
+.chat-actions{
+    display:flex;
+    gap:10px;
+}
+
+.chat-actions button{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:12px;
+    background:#F3F4F6;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.chat-actions button:hover{
+    background:#2563EB;
+    color:white;
+}
+
+/* =========================
+   BODY
+========================= */
+
+.chat-body{
+    flex:1;
+    overflow:auto;
+    padding:30px;
+    background:#EEF2FF;
+}
+
+.message{
+    display:flex;
+    margin-bottom:20px;
+}
+
+.message.me{
+    justify-content:flex-end;
+}
+
+.bubble{
+    max-width:420px;
+    padding:15px 18px;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.message.me .bubble{
+    background:#2563EB;
+    color:white;
+}
+
+.bubble p{
+    margin:0 0 8px;
+    line-height:1.5;
+}
+
+.bubble small{
+    font-size:12px;
+    opacity:.8;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.chat-footer{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:20px;
+    background:white;
+    border-top:1px solid #E5E7EB;
+}
+
+.icon-btn{
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:12px;
+    background:#F3F4F6;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.icon-btn:hover{
+    background:#2563EB;
+    color:white;
+}
+
+.chat-footer input{
+    flex:1;
+    padding:14px 18px;
+    border:1px solid #D1D5DB;
+    border-radius:30px;
+    outline:none;
+    font-size:15px;
+}
+
+.chat-footer input:focus{
+    border-color:#2563EB;
+}
+
+.send-btn{
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:50%;
+    background:#2563EB;
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+    transition:.3s;
+}
+
+.send-btn:hover{
+    background:#1D4ED8;
+    transform:scale(1.05);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+.messages-page{
+    grid-template-columns:1fr;
+}
+
+.contacts{
+    display:none;
+}
+
+.chat-header{
+    padding:15px;
+}
+
+.chat-body{
+    padding:20px;
+}
+
+.bubble{
+    max-width:90%;
+}
+
+.chat-footer{
+    padding:15px;
+}
+
+}

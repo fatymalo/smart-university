@@ -1,0 +1,996 @@
+<div class="students-page">
+
+  <!-- HEADER -->
+
+  <section class="page-header">
+
+    <div class="header-content">
+
+      <div class="breadcrumb">
+
+        <span>Administration</span>
+
+        <i class="bi bi-chevron-right"></i>
+
+        <span>Étudiants</span>
+
+      </div>
+
+      <h1>
+        Gestion des étudiants
+      </h1>
+
+      <p>
+        Gérez les inscriptions, profils et informations académiques
+        des étudiants de Smart University.
+      </p>
+
+    </div>
+
+    <button
+      class="btn-primary"
+      (click)="ouvrirModal()">
+
+      <i class="bi bi-person-plus-fill"></i>
+
+      Nouvel étudiant
+
+    </button>
+
+  </section>
+
+
+  <!-- STATISTIQUES -->
+
+  <section class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+        <i class="bi bi-people-fill"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Total étudiants</span>
+
+        <strong>
+          {{ totalStudents }}
+        </strong>
+
+        <small>
+          Étudiants inscrits
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon green">
+        <i class="bi bi-person-check-fill"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Étudiants actifs</span>
+
+        <strong>
+          {{ activeStudents }}
+        </strong>
+
+        <small>
+          Inscrits actifs
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+        <i class="bi bi-person-exclamation"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Suspendus</span>
+
+        <strong>
+          {{ suspendedStudents }}
+        </strong>
+
+        <small>
+          Dossiers suspendus
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon purple">
+        <i class="bi bi-mortarboard-fill"></i>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Filières</span>
+
+        <strong>
+          {{ totalPrograms }}
+        </strong>
+
+        <small>
+          Filières représentées
+        </small>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FILTRES -->
+
+  <section class="filter-card">
+
+    <div class="filter-title">
+
+      <div class="filter-title-icon">
+        <i class="bi bi-funnel-fill"></i>
+      </div>
+
+      <div>
+
+        <strong>
+          Rechercher et filtrer
+        </strong>
+
+        <span>
+          Recherchez un étudiant rapidement
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="search-box">
+
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Nom, matricule, email ou téléphone...">
+
+    </div>
+
+
+    <select [(ngModel)]="selectedFiliere">
+
+      <option value="">
+        Toutes les filières
+      </option>
+
+      <option value="Informatique">
+        Informatique
+      </option>
+
+      <option value="Gestion">
+        Gestion
+      </option>
+
+      <option value="Droit">
+        Droit
+      </option>
+
+      <option value="Médecine">
+        Médecine
+      </option>
+
+    </select>
+
+
+    <select [(ngModel)]="selectedNiveau">
+
+      <option value="">
+        Tous les niveaux
+      </option>
+
+      <option value="Licence 1">
+        Licence 1
+      </option>
+
+      <option value="Licence 2">
+        Licence 2
+      </option>
+
+      <option value="Licence 3">
+        Licence 3
+      </option>
+
+      <option value="Master 1">
+        Master 1
+      </option>
+
+      <option value="Master 2">
+        Master 2
+      </option>
+
+    </select>
+
+
+    <select [(ngModel)]="selectedStatut">
+
+      <option value="">
+        Tous les statuts
+      </option>
+
+      <option value="Actif">
+        Actif
+      </option>
+
+      <option value="Suspendu">
+        Suspendu
+      </option>
+
+    </select>
+
+
+    <button
+      class="reset-btn"
+      (click)="resetFilters()">
+
+      <i class="bi bi-arrow-counterclockwise"></i>
+
+      Réinitialiser
+
+    </button>
+
+  </section>
+
+
+  <!-- TABLE -->
+
+  <section class="table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Liste des étudiants
+        </h2>
+
+        <p>
+          {{ filteredStudents.length }}
+          étudiant(s) affiché(s)
+        </p>
+
+      </div>
+
+      <div class="academic-year">
+
+        <i class="bi bi-calendar-event"></i>
+
+        Année universitaire 2025-2026
+
+      </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Étudiant</th>
+
+            <th>Matricule</th>
+
+            <th>Filière</th>
+
+            <th>Niveau</th>
+
+            <th>Contact</th>
+
+            <th>Statut</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let etudiant of filteredStudents">
+
+            <!-- ETUDIANT -->
+
+            <td>
+
+              <div class="student-cell">
+
+                <img
+                  [src]="etudiant.photo"
+                  [alt]="etudiant.nom">
+
+                <div>
+
+                  <strong>
+                    {{ etudiant.nom }}
+                  </strong>
+
+                  <span>
+                    Étudiant universitaire
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- MATRICULE -->
+
+            <td>
+
+              <span class="student-id">
+                {{ etudiant.id }}
+              </span>
+
+            </td>
+
+
+            <!-- FILIERE -->
+
+            <td>
+
+              <span class="badge badge-blue">
+
+                <i class="bi bi-book"></i>
+
+                {{ etudiant.filiere }}
+
+              </span>
+
+            </td>
+
+
+            <!-- NIVEAU -->
+
+            <td>
+
+              <span class="badge badge-purple">
+
+                {{ etudiant.niveau }}
+
+              </span>
+
+            </td>
+
+
+            <!-- CONTACT -->
+
+            <td>
+
+              <div class="contact-cell">
+
+                <span>
+
+                  <i class="bi bi-telephone"></i>
+
+                  {{ etudiant.telephone }}
+
+                </span>
+
+                <span>
+
+                  <i class="bi bi-envelope"></i>
+
+                  {{ etudiant.email }}
+
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- STATUT -->
+
+            <td>
+
+              <span
+                class="status"
+                [ngClass]="{
+                  'status-active': etudiant.statut === 'Actif',
+                  'status-suspended': etudiant.statut === 'Suspendu'
+                }">
+
+                <i class="bi bi-circle-fill"></i>
+
+                {{ etudiant.statut }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ACTIONS -->
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="action view"
+                  title="Voir le profil"
+                  (click)="voirEtudiant(etudiant.id)">
+
+                  <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+
+                <button
+                  class="action edit"
+                  title="Modifier"
+                  (click)="modifierEtudiant(etudiant.id)">
+
+                  <i class="bi bi-pencil-fill"></i>
+
+                </button>
+
+
+                <button
+                  class="action delete"
+                  title="Supprimer"
+                  (click)="supprimerEtudiant(etudiant.id)">
+
+                  <i class="bi bi-trash3-fill"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- AUCUN RESULTAT -->
+
+          <tr
+            *ngIf="filteredStudents.length === 0">
+
+            <td
+              colspan="7"
+              class="empty-state">
+
+              <div class="empty-icon">
+
+                <i class="bi bi-person-x"></i>
+
+              </div>
+
+              <h3>
+                Aucun étudiant trouvé
+              </h3>
+
+              <p>
+                Aucun étudiant ne correspond à vos critères.
+              </p>
+
+              <button
+                (click)="resetFilters()">
+
+                Réinitialiser les filtres
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="table-footer">
+
+      <span>
+
+        Affichage de
+
+        <strong>
+          {{ filteredStudents.length }}
+        </strong>
+
+        étudiant(s)
+
+      </span>
+
+      <span class="status-info">
+
+        <i class="bi bi-shield-check"></i>
+
+        Données académiques sécurisées
+
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- MODAL AJOUT / MODIFICATION -->
+
+  <div
+    class="student-modal-backdrop"
+    *ngIf="showModal"
+    (click)="fermerModal()">
+
+    <div
+      class="student-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <div class="modal-header">
+
+        <div class="modal-title">
+
+          <div class="modal-icon">
+
+            <i class="bi bi-person-plus-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h3>
+              {{
+                isEditing
+                ? 'Modifier l’étudiant'
+                : 'Nouvel étudiant'
+              }}
+            </h3>
+
+            <p>
+              Renseignez les informations académiques
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="close-modal"
+          (click)="fermerModal()">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <div class="form-section">
+
+          <h4>
+
+            <i class="bi bi-person-vcard"></i>
+
+            Informations personnelles
+
+          </h4>
+
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label>
+                Matricule
+              </label>
+
+              <input
+                type="text"
+                [(ngModel)]="newStudent.id"
+                readonly>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Nom complet *
+              </label>
+
+              <input
+                type="text"
+                [(ngModel)]="newStudent.nom"
+                placeholder="Ex : Ahmed Diallo">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Téléphone *
+              </label>
+
+              <input
+                type="text"
+                [(ngModel)]="newStudent.telephone"
+                placeholder="Ex : 77 123 45 67">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Adresse email *
+              </label>
+
+              <input
+                type="email"
+                [(ngModel)]="newStudent.email"
+                placeholder="etudiant@university.edu">
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-section">
+
+          <h4>
+
+            <i class="bi bi-mortarboard"></i>
+
+            Informations académiques
+
+          </h4>
+
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label>
+                Filière *
+              </label>
+
+              <select [(ngModel)]="newStudent.filiere">
+
+                <option value="">
+                  Sélectionner une filière
+                </option>
+
+                <option value="Informatique">
+                  Informatique
+                </option>
+
+                <option value="Gestion">
+                  Gestion
+                </option>
+
+                <option value="Droit">
+                  Droit
+                </option>
+
+                <option value="Médecine">
+                  Médecine
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Niveau *
+              </label>
+
+              <select [(ngModel)]="newStudent.niveau">
+
+                <option value="">
+                  Sélectionner un niveau
+                </option>
+
+                <option value="Licence 1">
+                  Licence 1
+                </option>
+
+                <option value="Licence 2">
+                  Licence 2
+                </option>
+
+                <option value="Licence 3">
+                  Licence 3
+                </option>
+
+                <option value="Master 1">
+                  Master 1
+                </option>
+
+                <option value="Master 2">
+                  Master 2
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Statut
+              </label>
+
+              <select [(ngModel)]="newStudent.statut">
+
+                <option value="Actif">
+                  Actif
+                </option>
+
+                <option value="Suspendu">
+                  Suspendu
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="btn-cancel"
+          (click)="fermerModal()">
+
+          Annuler
+
+        </button>
+
+        <button
+          class="btn-save"
+          (click)="enregistrerEtudiant()">
+
+          <i class="bi bi-check-lg"></i>
+
+          {{
+            isEditing
+            ? 'Enregistrer les modifications'
+            : 'Créer l’étudiant'
+          }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MODAL PROFIL -->
+
+  <div
+    class="student-modal-backdrop"
+    *ngIf="showDetails"
+    (click)="fermerDetails()">
+
+    <div
+      class="profile-modal"
+      *ngIf="selectedStudent"
+      (click)="$event.stopPropagation()">
+
+
+      <div class="profile-header">
+
+        <button
+          class="close-modal profile-close"
+          (click)="fermerDetails()">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+
+        <img
+          [src]="selectedStudent.photo"
+          [alt]="selectedStudent.nom">
+
+
+        <div>
+
+          <span class="profile-id">
+            {{ selectedStudent.id }}
+          </span>
+
+          <h2>
+            {{ selectedStudent.nom }}
+          </h2>
+
+          <p>
+            Étudiant · {{ selectedStudent.filiere }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="profile-body">
+
+        <div class="profile-item">
+
+          <i class="bi bi-mortarboard-fill"></i>
+
+          <div>
+
+            <span>Formation</span>
+
+            <strong>
+              {{ selectedStudent.filiere }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="profile-item">
+
+          <i class="bi bi-bar-chart-fill"></i>
+
+          <div>
+
+            <span>Niveau</span>
+
+            <strong>
+              {{ selectedStudent.niveau }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="profile-item">
+
+          <i class="bi bi-telephone-fill"></i>
+
+          <div>
+
+            <span>Téléphone</span>
+
+            <strong>
+              {{ selectedStudent.telephone }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="profile-item">
+
+          <i class="bi bi-envelope-fill"></i>
+
+          <div>
+
+            <span>Email</span>
+
+            <strong>
+              {{ selectedStudent.email }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="profile-item">
+
+          <i class="bi bi-person-check-fill"></i>
+
+          <div>
+
+            <span>Statut académique</span>
+
+            <strong>
+              {{ selectedStudent.statut }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="profile-footer">
+
+        <button
+          class="btn-cancel"
+          (click)="fermerDetails()">
+
+          Fermer
+
+        </button>
+
+        <button
+          class="btn-save"
+          (click)="modifierEtudiant(selectedStudent.id); fermerDetails()">
+
+          <i class="bi bi-pencil"></i>
+
+          Modifier
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
