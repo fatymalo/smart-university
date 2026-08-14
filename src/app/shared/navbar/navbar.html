@@ -1,60 +1,81 @@
 <nav class="navbar">
 
+    <!-- RECHERCHE -->
     <div class="search-box">
-
         <i class="bi bi-search"></i>
 
         <input
             type="text"
-            placeholder="Rechercher...">
-
+            placeholder="Rechercher..."
+        >
     </div>
 
+
+    <!-- PARTIE DROITE -->
     <div class="nav-right">
 
-        <div class="notification">
-
+        <!-- NOTIFICATIONS -->
+        <a
+            routerLink="/notifications"
+            class="nav-icon"
+            title="Notifications"
+        >
             <i class="bi bi-bell-fill"></i>
 
-            <span>3</span>
+            <span class="notification-badge">
+                3
+            </span>
+        </a>
 
-        </div>
 
-        <div class="message">
-
+        <!-- MESSAGES -->
+        <a
+            routerLink="/messages"
+            class="nav-icon"
+            title="Messages"
+        >
             <i class="bi bi-chat-fill"></i>
 
-        </div>
+            <span class="notification-badge message-badge">
+                1
+            </span>
+        </a>
 
-        <div class="profile">
+
+        <!-- PROFIL -->
+        <a
+            routerLink="/profile"
+            class="profile"
+            title="Mon profil"
+        >
 
             <img
                 src="https://i.pravatar.cc/100?img=12"
-                alt="Administrateur">
+                alt="Administrateur"
+            >
 
             <div class="profile-info">
 
-                <strong>
-                    Administrateur
-                </strong>
+                <strong>Administrateur</strong>
 
-                <small>
-                    Admin
-                </small>
+                <small>Admin</small>
 
             </div>
 
-        </div>
+            <i class="bi bi-chevron-down profile-arrow"></i>
 
+        </a>
+
+
+        <!-- DÉCONNEXION -->
         <button
             class="logout-btn"
             type="button"
-            (click)="seDeconnecter()">
-
+            (click)="seDeconnecter()"
+        >
             <i class="bi bi-box-arrow-right"></i>
 
-            Déconnexion
-
+            <span>Déconnexion</span>
         </button>
 
     </div>

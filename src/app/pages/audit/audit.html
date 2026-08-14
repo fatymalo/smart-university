@@ -1,1 +1,159 @@
-<p>audit works!</p>
+<div class="audit-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Journal d'audit</h1>
+      <p>Suivez toutes les activités effectuées sur la plateforme.</p>
+    </div>
+
+    <button class="btn-refresh" (click)="clearFilters()">
+      <i class="bi bi-arrow-clockwise"></i>
+      Actualiser
+    </button>
+  </div>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon blue">
+        <i class="bi bi-activity"></i>
+      </div>
+      <div>
+        <span>Total des actions</span>
+        <strong>{{ totalActions }}</strong>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon green">
+        <i class="bi bi-check-circle"></i>
+      </div>
+      <div>
+        <span>Actions réussies</span>
+        <strong>{{ successfulActions }}</strong>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon red">
+        <i class="bi bi-x-circle"></i>
+      </div>
+      <div>
+        <span>Échecs</span>
+        <strong>{{ failedActions }}</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="audit-card">
+
+    <div class="card-header">
+      <div>
+        <h2>Historique des activités</h2>
+        <p>Liste des dernières actions enregistrées</p>
+      </div>
+    </div>
+
+    <div class="filters">
+
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Rechercher une activité..."
+        />
+      </div>
+
+      <select [(ngModel)]="selectedModule">
+        <option value="Tous">Tous les modules</option>
+        <option value="Authentification">Authentification</option>
+        <option value="Étudiants">Étudiants</option>
+        <option value="Enseignants">Enseignants</option>
+        <option value="Utilisateurs">Utilisateurs</option>
+      </select>
+
+      <button class="btn-clear" (click)="clearFilters()">
+        <i class="bi bi-funnel"></i>
+        Réinitialiser
+      </button>
+
+    </div>
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>UTILISATEUR</th>
+            <th>ACTION</th>
+            <th>MODULE</th>
+            <th>DATE</th>
+            <th>ADRESSE IP</th>
+            <th>STATUT</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let log of filteredLogs">
+
+            <td>
+              <div class="user-cell">
+                <div class="avatar">
+                  {{ log.user.charAt(0) }}
+                </div>
+                <strong>{{ log.user }}</strong>
+              </div>
+            </td>
+
+            <td>{{ log.action }}</td>
+
+            <td>
+              <span class="module-badge">
+                {{ log.module }}
+              </span>
+            </td>
+
+            <td>{{ log.date }}</td>
+
+            <td class="ip">
+              {{ log.ip }}
+            </td>
+
+            <td>
+              <span
+                class="status"
+                [class.success]="log.status === 'Succès'"
+                [class.failed]="log.status === 'Échec'"
+              >
+                <i
+                  class="bi"
+                  [class.bi-check-circle-fill]="log.status === 'Succès'"
+                  [class.bi-x-circle-fill]="log.status === 'Échec'"
+                ></i>
+
+                {{ log.status }}
+              </span>
+            </td>
+
+          </tr>
+
+          <tr *ngIf="filteredLogs.length === 0">
+            <td colspan="6" class="empty">
+              <i class="bi bi-search"></i>
+              <p>Aucune activité trouvée.</p>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

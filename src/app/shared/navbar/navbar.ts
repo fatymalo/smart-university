@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -12,9 +12,8 @@ export class Navbar {
 
   constructor(private readonly router: Router) {}
 
-  seDeconnecter() {
+  seDeconnecter(): void {
     localStorage.removeItem('isLoggedIn');
     this.router.navigate(['/login']);
   }
-
 }

@@ -1,1 +1,168 @@
-<p>reports works!</p>
+<div class="reports-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h1>Rapports</h1>
+      <p>Consultez, générez et téléchargez vos rapports universitaires</p>
+    </div>
+
+    <button class="btn-primary">
+      <i class="bi bi-file-earmark-plus"></i>
+      Nouveau rapport
+    </button>
+
+  </div>
+
+  <!-- STATISTIQUES -->
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon blue">
+        <i class="bi bi-file-earmark-text"></i>
+      </div>
+
+      <div>
+        <span>Total rapports</span>
+        <strong>24</strong>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon green">
+        <i class="bi bi-check-circle"></i>
+      </div>
+
+      <div>
+        <span>Générés</span>
+        <strong>21</strong>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon orange">
+        <i class="bi bi-clock-history"></i>
+      </div>
+
+      <div>
+        <span>En attente</span>
+        <strong>3</strong>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon purple">
+        <i class="bi bi-download"></i>
+      </div>
+
+      <div>
+        <span>Téléchargements</span>
+        <strong>156</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FILTRES -->
+
+  <div class="filter-card">
+
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        placeholder="Rechercher un rapport..."
+      >
+    </div>
+
+    <select>
+      <option value="">Tous les types</option>
+      <option>Étudiants</option>
+      <option>Enseignants</option>
+      <option>Présences</option>
+      <option>Académique</option>
+      <option>Finance</option>
+      <option>Inscriptions</option>
+    </select>
+
+    <select>
+      <option value="">Tous les formats</option>
+      <option>PDF</option>
+      <option>Excel</option>
+    </select>
+
+  </div>
+
+  <!-- RAPPORTS -->
+
+  <div class="reports-grid">
+
+    <div
+      class="report-card"
+      *ngFor="let report of reports"
+    >
+
+      <div class="report-header">
+
+        <div class="report-icon">
+          <i class="bi" [ngClass]="report.icon"></i>
+        </div>
+
+        <span
+          class="format"
+          [class.excel]="report.format === 'Excel'"
+        >
+          {{ report.format }}
+        </span>
+
+      </div>
+
+      <div class="report-content">
+
+        <h3>{{ report.title }}</h3>
+
+        <p>{{ report.description }}</p>
+
+        <div class="report-info">
+
+          <span>
+            <i class="bi bi-tag"></i>
+            {{ report.type }}
+          </span>
+
+          <span>
+            <i class="bi bi-calendar3"></i>
+            {{ report.date }}
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="report-actions">
+
+        <button
+          class="btn-download"
+          (click)="telechargerRapport(report)"
+        >
+          <i class="bi bi-download"></i>
+          Télécharger
+        </button>
+
+        <button
+          class="btn-print"
+          (click)="imprimerRapport(report)"
+          title="Imprimer"
+        >
+          <i class="bi bi-printer"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
