@@ -1,154 +1,245 @@
-.navbar{
+.navbar {
+    height: 80px;
+    width: 100%;
 
-height:80px;
+    background: #ffffff;
 
-background:white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-display:flex;
+    padding: 0 30px;
 
-align-items:center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 
-justify-content:space-between;
-
-padding:0 30px;
-
-box-shadow:0 5px 20px rgba(0,0,0,.05);
-
+    position: relative;
+    z-index: 100;
 }
 
 
-.search-box{
+/* =========================
+   RECHERCHE
+========================= */
 
-display:flex;
+.search-box {
+    display: flex;
+    align-items: center;
 
-align-items:center;
+    gap: 10px;
 
-gap:10px;
+    background: #f3f4f6;
 
-background:#f3f4f6;
+    padding: 10px 20px;
 
-padding:10px 20px;
+    border-radius: 30px;
 
-border-radius:30px;
+    width: 350px;
+}
 
-width:350px;
+.search-box i {
+    color: #374151;
+    font-size: 18px;
+}
 
+.search-box input {
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    width: 100%;
+
+    font-size: 14px;
 }
 
 
-.search-box input{
+/* =========================
+   PARTIE DROITE
+========================= */
 
-border:none;
+.nav-right {
+    display: flex;
+    align-items: center;
 
-outline:none;
+    gap: 25px;
 
-background:transparent;
-
-width:100%;
-
+    margin-left: auto;
 }
 
 
-.nav-right{
-
-display:flex;
-
-align-items:center;
-
-gap:25px;
-
-}
-
+/* =========================
+   NOTIFICATIONS
+========================= */
 
 .notification,
-.message{
+.message {
+    position: relative;
 
-position:relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-font-size:22px;
+    width: 35px;
+    height: 35px;
 
-color:#374151;
+    font-size: 20px;
 
-cursor:pointer;
+    color: #374151;
 
+    cursor: pointer;
+}
+
+.notification span {
+    position: absolute;
+
+    top: -5px;
+    right: -5px;
+
+    background: #ef4444;
+    color: white;
+
+    font-size: 10px;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
-.notification span{
+/* =========================
+   PROFIL
+========================= */
 
-position:absolute;
+.profile {
+    display: flex;
+    align-items: center;
 
-top:-8px;
+    gap: 12px;
 
-right:-10px;
+    white-space: nowrap;
+}
 
-background:#ef4444;
+.profile img {
+    width: 45px !important;
+    height: 45px !important;
 
-color:white;
+    border-radius: 50%;
 
-font-size:11px;
+    object-fit: cover;
 
-width:18px;
+    display: block;
+}
 
-height:18px;
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
 
-border-radius:50%;
+.profile-info strong {
+    font-size: 14px;
+    color: #111827;
+}
 
-display:flex;
+.profile-info small {
+    margin-top: 3px;
 
-justify-content:center;
+    color: #6b7280;
 
-align-items:center;
-
+    font-size: 12px;
 }
 
 
-.profile{
+/* =========================
+   DECONNEXION
+========================= */
 
-display:flex;
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-align-items:center;
+    gap: 8px;
 
-gap:12px;
+    padding: 10px 16px;
 
+    border: none;
+
+    border-radius: 10px;
+
+    background: #fee2e2;
+    color: #dc2626;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    white-space: nowrap;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+.logout-btn i {
+    font-size: 18px;
 }
 
 
-.profile img{
+/* =========================
+   RESPONSIVE
+========================= */
 
-width:45px;
+@media (max-width: 1100px) {
 
-height:45px;
+    .search-box {
+        width: 280px;
+    }
 
-border-radius:50%;
+    .nav-right {
+        gap: 15px;
+    }
 
-object-fit:cover;
-
+    .profile-info {
+        display: none;
+    }
 }
 
 
-.profile small{
+@media (max-width: 700px) {
 
-display:block;
+    .navbar {
+        height: 70px;
+        padding: 0 15px;
+    }
 
-color:#6b7280;
+    .search-box {
+        display: none;
+    }
 
-}
+    .nav-right {
+        width: 100%;
 
+        justify-content: flex-end;
 
+        gap: 10px;
+    }
 
-@media(max-width:900px){
+    .logout-btn {
+        padding: 9px;
+    }
 
-.search-box{
-
-display:none;
-
-}
-
-.navbar{
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
+    .logout-btn span {
+        display: none;
+    }
 }

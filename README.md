@@ -1,59 +1,138 @@
-# SmartUniversity
+# 🎓 Smart University
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.18.
+## 📚 Plateforme intelligente de gestion universitaire
 
-## Development server
+Smart University est une plateforme web moderne destinée à faciliter la gestion d'un établissement universitaire.
 
-To start a local development server, run:
+L'application permet de centraliser et de gérer les principales informations universitaires à travers une interface moderne, intuitive et responsive.
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🚀 Fonctionnalités
 
-## Code scaffolding
+### 🔐 Authentification
+- Connexion administrateur
+- Validation des identifiants
+- Protection des routes avec `AuthGuard`
+- Déconnexion
+- Redirection automatique vers la page de connexion
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 📊 Tableau de bord
+- Vue générale de l'université
+- Statistiques principales
+- Navigation rapide vers les différentes fonctionnalités
 
-```bash
-ng generate component component-name
-```
+### 👨‍🎓 Gestion des étudiants
+- Liste des étudiants
+- Recherche
+- Informations détaillées
+- Ajout d'un étudiant
+- Modification d'un étudiant
+- Suppression d'un étudiant
+- Gestion des statuts
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 👨‍🏫 Gestion des enseignants
+- Liste des enseignants
+- Informations des enseignants
+- Gestion des enseignants
 
-```bash
-ng generate --help
-```
+### 📚 Gestion des cours
+- Gestion des cours
+- Filières
+- Niveaux
+- Informations pédagogiques
 
-## Building
+### 🗓️ Gestion des emplois du temps
+- Consultation des horaires
+- Organisation des cours
+- Gestion des programmes
 
-To build the project run:
+### 📝 Gestion des notes
+- Consultation des notes
+- Gestion des résultats académiques
 
-```bash
-ng build
-```
+### 💳 Gestion des paiements
+- Suivi des paiements
+- Informations financières des étudiants
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 📖 Bibliothèque
+- Gestion des ressources
+- Consultation des documents
 
-## Running unit tests
+### 💬 Messagerie
+- Gestion des messages
+- Communication avec les utilisateurs
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### 🔔 Notifications
+- Notifications système
+- Alertes importantes
 
-```bash
-ng test
-```
+### 👤 Profil
+- Informations du profil administrateur
 
-## Running end-to-end tests
+### ⚙️ Paramètres
+- Gestion des paramètres de l'application
 
-For end-to-end (e2e) testing, run:
+### 📋 Rapports
+- Consultation des rapports
+- Données administratives et académiques
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🛠️ Technologies utilisées
 
-## Additional Resources
+### Frontend
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Angular 21
+- TypeScript
+- HTML5
+- CSS3
+- Bootstrap
+- Bootstrap Icons
+
+### Gestion du projet
+
+- Git
+- GitHub
+- Angular CLI
+
+---
+
+## 📁 Structure du projet
+
+```text
+smart-university/
+│
+├── src/
+│   ├── app/
+│   │   │
+│   │   ├── guards/
+│   │   │   └── auth-guard.ts
+│   │   │
+│   │   ├── layouts/
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── dashboard/
+│   │   │   ├── students/
+│   │   │   ├── teachers/
+│   │   │   ├── courses/
+│   │   │   ├── schedules/
+│   │   │   ├── notes/
+│   │   │   ├── payments/
+│   │   │   ├── library/
+│   │   │   ├── messages/
+│   │   │   ├── notifications/
+│   │   │   ├── profile/
+│   │   │   ├── settings/
+│   │   │   ├── reports/
+│   │   │   └── audit/
+│   │   │
+│   │   └── shared/
+│   │
+│   ├── styles.css
+│   └── main.ts
+│
+├── angular.json
+├── package.json
+├── tsconfig.json
+└── README.md
